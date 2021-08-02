@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE statedata SYSTEM "stateData.dtd">
+<statedata>
+	<controlData identifier="openloop" 
+	             mode="PERCENT_OUTPUT"/>
+	<mechanismTarget stateIdentifier="HOOKDELIVERYOFF"
+	                 controlDataIdentifier="openloop"
+					 value="0.0"/>
+	<mechanismTarget stateIdentifier="HOOKDELIVERYUP"
+	                 controlDataIdentifier="openloop"
+					 value="0.2"/>
+	<mechanismTarget stateIdentifier="HOOKDELIVERYDOWN"
+	                 controlDataIdentifier="openloop"
+					 value="-0.1"/>
+</statedata>
