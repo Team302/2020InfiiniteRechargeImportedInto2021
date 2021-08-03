@@ -77,7 +77,7 @@ void DragonChassis::SetOutput
     double                                   rightValue     
 )
 {
-    m_leftSide->SetOutput( controlType, leftValue );
+    m_leftSide->SetOutput( controlType, leftValue * 0.99 );
     m_rightSide->SetOutput( controlType, rightValue );
 }
 
