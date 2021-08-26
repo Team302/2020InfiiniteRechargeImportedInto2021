@@ -67,7 +67,7 @@ DragonChassis::~DragonChassis()
 
 /// @brief      Run chassis 
 /// @param [in] ControlModes::CONTROL_TYPE   controlType:  How are the item(s) being controlled
-/// @param [in] double                                     leftVvalue:   Left side target (units are based on the controlType)
+/// @param [in] double                                     leftValue:   Left side target (units are based on the controlType)
 /// @param [in] double                                     rightValue:   Right side target (units are based on the controlType)
 /// @return     void
 void DragonChassis::SetOutput
@@ -77,7 +77,7 @@ void DragonChassis::SetOutput
     double                                   rightValue     
 )
 {
-    m_leftSide->SetOutput( controlType, leftValue * 0.99 );
+    m_leftSide->SetOutput( controlType, leftValue * 0.99 ); //0.99 accounts for shooter side being slightly faster than right side
     m_rightSide->SetOutput( controlType, rightValue );
 }
 
