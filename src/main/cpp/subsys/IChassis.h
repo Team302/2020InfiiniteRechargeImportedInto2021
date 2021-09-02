@@ -20,6 +20,7 @@
 #include <memory>
 
 // FRC includes
+#include <frc/geometry/Pose2d.h>
 
 // Team 302 includes
 #include <subsys/IMechanism.h>
@@ -47,6 +48,11 @@ class IChassis
             double                                   rightValue     
         ) = 0;
 
+        virtual void SetOutput
+        (
+            frc::ChassisSpeeds chassisSpeeds
+        );
+
 
         /// @brief  Return the current position of the center of the DragonChassis in inches.  
         /// @return double  position in inches of the center of the chassis
@@ -59,6 +65,10 @@ class IChassis
         /// @brief  Return the current position of the right side of the DragonChassis in inches.  
         /// @return double  position in inches of the right side of the chassis
         virtual double GetCurrentRightPosition() const = 0;
+
+        virtual frc::Pose2d GetPose() const;
+
+        virtual frc::Pose2d UpdatePosition();
 
         /// @brief  Return the current speed of the center of the DragonChassis in inches per second.  
         /// @return double  speed in inches per second of the center of the chassis

@@ -67,6 +67,11 @@ class DragonChassis : public IChassis
             double                                   rightValue     
         ) override;
 
+        void SetOutput
+        (
+            frc::ChassisSpeeds chassisSpeeds
+        ) override;
+
 
         /// @brief  Return the current position of the center of the DragonChassis in inches.  
         /// @return double  position in inches of the center of the chassis
@@ -79,6 +84,10 @@ class DragonChassis : public IChassis
         /// @brief  Return the current position of the right side of the DragonChassis in inches.  
         /// @return double  position in inches of the right side of the chassis
         double GetCurrentRightPosition() const override;
+
+        frc::Pose2d GetPose() const override;
+
+        frc::Pose2d UpdatePosition() override;
 
 
         /// @brief  Return the current speed of the center of the DragonChassis in inches per second.  
@@ -107,6 +116,8 @@ class DragonChassis : public IChassis
     private:
         IMechanism*                     m_leftSide;
         IMechanism*                     m_rightSide;
+
+        frc::Pose2d                     m_pose;
 
         double                          m_wheelBase;
         double                          m_wheelTrack;

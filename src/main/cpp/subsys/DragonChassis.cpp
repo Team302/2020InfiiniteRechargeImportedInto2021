@@ -19,6 +19,7 @@
 #include <memory>
 
 // FRC includes
+#include <frc/kinematics/ChassisSpeeds.h>
 
 // Team 302 includes
 #include <subsys/DragonChassis.h>
@@ -81,6 +82,13 @@ void DragonChassis::SetOutput
     m_rightSide->SetOutput( controlType, rightValue );
 }
 
+void DragonChassis::SetOutput
+(
+        frc::ChassisSpeeds  chassisSpeeds
+)
+{
+}
+
 
 /// @brief  Return the current position of the center of the DragonChassis in inches.  
 /// @return double  position in inches of the center of the chassis
@@ -101,6 +109,14 @@ double DragonChassis::GetCurrentLeftPosition() const
 double DragonChassis::GetCurrentRightPosition() const
 {
     return m_rightSide->GetCurrentPosition();
+}
+
+frc::Pose2d DragonChassis::GetPose() const{
+
+}
+
+frc::Pose2d DragonChassis::UpdatePosition() {
+    return m_pose;
 }
 
 
