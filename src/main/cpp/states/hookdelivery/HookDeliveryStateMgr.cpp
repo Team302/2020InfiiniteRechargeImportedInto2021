@@ -59,16 +59,11 @@ HookDeliveryStateMgr::HookDeliveryStateMgr() : m_currentState(),
 
     // initialize the xml string to state map
     map<string, HOOK_DELIVERY_STATE> stateMap;
-    /*stateMap["HOOKDELIVERYSTOW"] = HOOK_DELIVERY_STATE::DOWN;
-    stateMap["HOOKDELIVERYRAISE"]  = HOOK_DELIVERY_STATE::RAISE;
-    stateMap["HOOKDELIVERYHOLD"]  = HOOK_DELIVERY_STATE::HIGH;
-    stateMap["HOOKDELIVERYLOWER"] = HOOK_DELIVERY_STATE::LOWER;
-    stateMap["HOOKDELIVERYMANUAL"] = HOOK_DELIVERY_STATE::MANUAL;
-    */
     stateMap["HOOKDELIVERYOFF"]  = HOOK_DELIVERY_STATE::OFF;
     stateMap["HOOKDELIVERYUP"]  = HOOK_DELIVERY_STATE::UP;
     stateMap["HOOKDELIVERYDOWN"] = HOOK_DELIVERY_STATE::DOWN;
     m_stateVector.resize(3);
+
     // create the states passing the configuration data
     for ( auto td: targetData )
     {
@@ -81,12 +76,11 @@ HookDeliveryStateMgr::HookDeliveryStateMgr() : m_currentState(),
             {
                 auto controlData = td->GetController();
                 auto target = td->GetTarget();
-                auto solState = td->GetSolenoidState();
                 switch ( stateEnum )
                 {
                     case HOOK_DELIVERY_STATE::OFF:
                     {   
-                        auto thisState = new HookDeliveryState( controlData, target, solState );
+                        auto thisState = new HookDeliveryState( controlData, target );
                         m_stateVector[stateEnum] = thisState;
                         m_currentState = thisState;
                         m_currentStateEnum = stateEnum;
@@ -96,48 +90,18 @@ HookDeliveryStateMgr::HookDeliveryStateMgr() : m_currentState(),
 
                     case HOOK_DELIVERY_STATE::UP:
                     {   
-                        auto thisState = new HookDeliveryState( controlData, target, solState );
+                        auto thisState = new HookDeliveryState( controlData, target );
                         m_stateVector[stateEnum] = thisState;
                     }
                     break;
 
                     case HOOK_DELIVERY_STATE::DOWN:
                     {   
-                        auto thisState = new HookDeliveryState( controlData, target, solState );
+                        auto thisState = new HookDeliveryState( controlData, target );
                         m_stateVector[stateEnum] = thisState;
                     }
                     break;
 
-                    /*case HOOK_DELIVERY_STATE::RAISE:
-                    {   
-                        auto thisState = new HookDeliveryState( controlData, target, solState );
-                        m_stateVector[stateEnum] = thisState;
-                    }
-                    break;
-
-                    case HOOK_DELIVERY_STATE::HIGH:
-                    {   
-                        auto thisState = new HookDeliveryState( controlData, target, solState );
-                        m_stateVector[stateEnum] = thisState;
-                    }
-                    break;
-
-                    case HOOK_DELIVERY_STATE::LOWER:
-                    {
-                        auto thisState = new HookDeliveryState(controlData, target, solState);
-                        m_stateVector[stateEnum] = thisState;
-                    
-                    }
-                    break;
-
-                    case HOOK_DELIVERY_STATE::MANUAL:
-                    {
-                        auto thisState = new HookDeliveryState(controlData, target, solState);
-                        m_stateVector[stateEnum] = thisState;
-                    
-                    }
-                    break;
-                    */
                     default:
                     {
                         Logger::GetLogger()->LogError( string("HookDeliveryStateMgr::HookDeliveryStateMgr"), string("unknown state"));
@@ -164,7 +128,6 @@ void HookDeliveryStateMgr::RunCurrentState()
     if ( MechanismFactory::GetMechanismFactory()->GetIMechanism( MechanismTypes::MECHANISM_TYPE::HOOK_DELIVERY ) != nullptr )
     {
         // process teleop/manual interrupts
-        
         auto controller = TeleopControl::GetInstance();
         if ( controller != nullptr )
         {
@@ -180,25 +143,6 @@ void HookDeliveryStateMgr::RunCurrentState()
             {
                 SetCurrentState( HOOK_DELIVERY_STATE::OFF, false);
             }
-            /*if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::CLIMBER_EXTEND ) &&
-                    m_currentStateEnum != HOOK_DELIVERY_STATE::RAISE )
-            {
-                SetCurrentState( HOOK_DELIVERY_STATE::RAISE, false );
-            }
-            else if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::CLIMBER_HOLD ) &&
-                    m_currentStateEnum != HOOK_DELIVERY_STATE::HIGH )
-            {
-                SetCurrentState( HOOK_DELIVERY_STATE::HIGH, false );
-            }
-            else if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::CLIMBER_LIFT ) &&
-                    m_currentStateEnum != HOOK_DELIVERY_STATE::LOWER )
-            {
-                SetCurrentState( HOOK_DELIVERY_STATE::LOWER, false );
-            }
-            else
-            {
-                SetCurrentState( HOOK_DELIVERY_STATE::DOWN, false );
-            }*/
         }
         
         // run the current state
