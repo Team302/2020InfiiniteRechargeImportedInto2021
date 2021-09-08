@@ -20,9 +20,13 @@
 // C++ Includes
 
 // FRC includes
+#include <frc/geometry/Pose2d.h>
+#include <frc2/Timer.h>
+
 
 // Team 302 includes
 #include <hw/interfaces/IDragonMotorController.h>
+#include <hw/DragonPigeon.h>
 #include <subsys/IChassis.h>
 #include <subsys/IMechanism.h>
 #include <controllers/ControlModes.h>
@@ -86,8 +90,11 @@ class DragonChassis : public IChassis
         double GetCurrentRightPosition() const override;
 
         frc::Pose2d GetPose() const override;
-
-        frc::Pose2d UpdatePosition() override;
+        void ResetPose
+        (
+            const frc::Pose2d&      pose
+        ) override;
+        void UpdatePose() override;
 
 
         /// @brief  Return the current speed of the center of the DragonChassis in inches per second.  
@@ -112,16 +119,22 @@ class DragonChassis : public IChassis
         ) override;
 
         double GetWheelDiameter() const override;
+
+        bool IsMoving() const override;
         
     private:
         IMechanism*                     m_leftSide;
         IMechanism*                     m_rightSide;
 
-        frc::Pose2d                     m_pose;
-
         double                          m_wheelBase;
         double                          m_wheelTrack;
         double                          m_wheelDiameter;
+
+        DragonPigeon*                   m_pigeon;
+        frc::Pose2d                     m_pose;
+        frc2::Timer                     m_timer;
+        
+
 };
 
 

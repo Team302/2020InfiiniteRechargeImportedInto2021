@@ -25,24 +25,14 @@ using namespace std;
 ///@param [in] double   winchDiameter - The diameter of winch in inches.
 Climber::Climber
 (
-    shared_ptr<IDragonMotorController>             masterMotor,
-    shared_ptr<DragonSolenoid>                     masterSolenoid,
-    double                                         winchDiameter
+    shared_ptr<IDragonMotorController>             masterMotor
 ) : m_motorMaster( masterMotor ),
-    m_solenoidMaster( masterSolenoid ),
-    m_winchDiameter( winchDiameter),
     m_target( 0.0 )
 {
     if ( m_motorMaster.get() == nullptr )
     {
         Logger::GetLogger()->LogError( string( "Climber constructor" ), string( "motorMaster is nullptr" ) );
     }
-
-    if ( m_solenoidMaster.get() == nullptr )
-    {
-        Logger::GetLogger()->LogError( string( "Climber constructor" ), string( "solenoidMaster is nullptr" ) );
-    }
-
 }
 
 ///@brief Indicates that this is Climber
@@ -77,41 +67,6 @@ void Climber::SetOutput
     
 }
 
-///@brief Activate/Deactivate the extender Solenoid
-///@param [in] bool - true == extend, false == retract 
-///@return void
-void Climber::ActivateSolenoid
-(
-    bool activate
-)
-{
-    if (m_solenoidMaster.get() != nullptr )
-    {
-        m_solenoidMaster.get()->Set(activate);
-    }
-    else
-    {
-        Logger::GetLogger()->LogError( "Climber::ActivateSolenoid", "No solenoidMaster");
-    }
-    
-}
-
-///@brief Check if the extender solenoid is activated
-///@return  bool - true == extended, false == retracted
-bool Climber::IsSolenoidActivated()
-{
-    bool solenoidStatus;
-    if ( m_solenoidMaster.get() != nullptr )
-    {
-       solenoidStatus = m_solenoidMaster.get()->Get();
-    }
-    else
-    {
-        Logger::GetLogger()->LogError( "Climber::IsSolenoidActivated", "No solenoidMaster");
-    }
-    return solenoidStatus;
-    
-}
 
 ///@brief Return the current position of the climber in inches
 ///@return double   position in inches (positive is forward, negative is backward)
@@ -120,9 +75,7 @@ double Climber::GetCurrentPosition() const
     double distance = 0.0;
     if (m_motorMaster.get() != nullptr )
     {
-        distance = ( m_winchDiameter * M_PI);
-        auto nRotations = m_motorMaster.get()->GetRotations();
-        distance *= nRotations;
+        distance = m_motorMaster.get()->GetRotations();
     }
     else
     {
@@ -138,9 +91,7 @@ double Climber::GetCurrentSpeed() const
     double speed = 0.0;
     if ( m_motorMaster.get() != nullptr )
     {
-        speed = ( m_winchDiameter * M_PI ); // distance the wheel travels per revolution (inches)
-        auto rps = m_motorMaster.get()->GetRPS(); // number of rotations per second
-        speed *= rps;                       // distance per revolution * revolutions per second is inches per second
+        speed = m_motorMaster.get()->GetRPS(); // number of rotations per second
     }
     else
     {
@@ -161,3 +112,23 @@ void Climber::SetControlConstants
     // todo:  need to account for voltage mode
     m_motorMaster.get()->SetControlConstants(pid);
 }
+
+
+/// @brief      Activate/deactivate pneumatic solenoid
+/// @param [in] bool - true == extend, false == retract
+/// @return     void 
+void Climber::ActivateSolenoid
+(
+    bool     activate
+)
+{
+
+}
+
+/// @brief      Check if the pneumatic solenoid is activated
+/// @return     bool - true == extended, false == retract
+bool Climber::IsSolenoidActivated() 
+{
+    return false;
+}
+

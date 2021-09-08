@@ -29,6 +29,11 @@
 #include <controllers/ControlData.h>
 // Third Party Includes
 
+namespace frc
+{
+    class ChassisSpeeds;
+}
+
 
 ///	 @interface IChassis
 ///  @brief	    Interface for differential drives
@@ -48,10 +53,11 @@ class IChassis
             double                                   rightValue     
         ) = 0;
 
+
         virtual void SetOutput
         (
             frc::ChassisSpeeds chassisSpeeds
-        );
+        ) = 0;
 
 
         /// @brief  Return the current position of the center of the DragonChassis in inches.  
@@ -66,9 +72,13 @@ class IChassis
         /// @return double  position in inches of the right side of the chassis
         virtual double GetCurrentRightPosition() const = 0;
 
-        virtual frc::Pose2d GetPose() const;
+        virtual frc::Pose2d GetPose() const = 0;
+        virtual void ResetPose
+        (
+            const frc::Pose2d&      pose
+        ) = 0;
 
-        virtual frc::Pose2d UpdatePosition();
+        virtual void UpdatePose() = 0;
 
         /// @brief  Return the current speed of the center of the DragonChassis in inches per second.  
         /// @return double  speed in inches per second of the center of the chassis
@@ -91,6 +101,8 @@ class IChassis
         ) = 0;
 
         virtual double GetWheelDiameter() const = 0;
+
+        virtual bool IsMoving() const = 0;
 
 	IChassis() = default;
 	virtual ~IChassis() = default;

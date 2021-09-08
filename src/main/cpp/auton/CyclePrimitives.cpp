@@ -123,8 +123,8 @@ void CyclePrimitives::RunDoNothing()
 		                                   0.0,                 // start drive speed
 		                                   0.0,					// end drive speed
 										   state,
-										   0.0                  
-										   );             
+										   0.0,                  
+										  std::string() );             
 		m_doNothing = m_primFactory->GetIPrimitive(params);
 		m_doNothing->Init(params);
 		m_powerCells->Init(params);

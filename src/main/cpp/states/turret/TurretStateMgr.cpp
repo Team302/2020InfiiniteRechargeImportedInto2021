@@ -66,9 +66,6 @@ TurretStateMgr::TurretStateMgr() : m_stateVector(),
             {
                 auto controlData = td->GetController();
                 auto target = td->GetTarget();
-                auto fbControlData = td->GetFailoverController(); // todo pass through to the states
-                auto fbTarget = td->GetFailoverTarget();  // todo pass through to the states
-
                 switch ( stateEnum )
                 {
                     case TURRET_STATE::HOLD:
@@ -100,6 +97,7 @@ TurretStateMgr::TurretStateMgr() : m_stateVector(),
                         auto thisState = new TurretTurnAngle(controlData, td->GetTarget(), MechanismTargetData::SOLENOID::NONE);
                         m_stateVector[stateEnum] = thisState;
                     }
+                    break;
 
                     default:
                     {

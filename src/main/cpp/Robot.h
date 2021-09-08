@@ -96,7 +96,7 @@ class Robot : public frc::TimedRobot
       ClimberStateMgr*  m_winch;
       HookDeliveryStateMgr* m_hook;
 
-      //std::shared_ptr<IChassis> m_chassis;
+      std::shared_ptr<IChassis> m_chassis;
       IMechanism* m_shooterHood;
       IMechanism* m_turret;
       TeleopControl* m_controller;

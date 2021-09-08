@@ -23,6 +23,7 @@
 
 // 302 Includes
 #include <auton/primitives/DrivePath.h>
+#include <utils/Logger.h>
 
 using namespace std;
 using namespace frc;
@@ -127,11 +128,11 @@ void DrivePath::Run()
         Logger::GetLogger()->ToNtTable("DrivePathValues", "ChassisSpeedsZ", units::degrees_per_second_t(refChassisSpeeds.omega()).to<double>());
 
         // Run the chassis
-        m_chassis->Drive(refChassisSpeeds, false);
+        //m_chassis->SetOutput(refChassisSpeeds);
     }
     else
     {
-        m_chassis->Drive(0, 0, 0, false);
+        m_chassis->SetOutput(ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, 0.0, 0.0);
     }
 
 }

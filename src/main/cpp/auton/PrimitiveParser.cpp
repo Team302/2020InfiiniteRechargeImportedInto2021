@@ -49,6 +49,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
     float                       yloc = 0.0;
     BallManipulator::BALL_MANIPULATOR_STATE ballState = BallManipulator::BALL_MANIPULATOR_STATE::OFF;
     float                       turretAngle = 0.0;
+    std::string                 pathName;
+
     bool hasError = false;
     string fulldirfile = string("/home/lvuser/auton/");
     fulldirfile += fileName;
@@ -152,6 +154,10 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                         {
                             turretAngle = attr.as_float();
                         }
+                        else if ( strcmp( attr.name(), "pathname") == 0)
+                        {
+                            pathName = attr.value();
+                        }
                         else
                         {
                             Logger::GetLogger()->LogError( string("PrimitiveParser::ParseXML invalid attribute"), attr.name());
@@ -169,7 +175,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                                                                        startDriveSpeed,
                                                                        endDriveSpeed,
                                                                        ballState,
-                                                                       turretAngle ) );
+                                                                       turretAngle,
+                                                                       pathName ) );
                     }
                     else 
                     {
