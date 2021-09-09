@@ -19,6 +19,7 @@
 #include <auton/primitives/DriveToWall.h>
 #include <auton/primitives/AutoShoot.h>
 #include <auton/primitives/IPrimitive.h>
+#include <auton/primitives/ResetPosition.h>
 
 PrimitiveFactory* PrimitiveFactory::m_instance = nullptr;
 
@@ -37,7 +38,8 @@ PrimitiveFactory::PrimitiveFactory() :
 				m_holdPosition(nullptr),
 				m_driveToWall(nullptr),
 				m_driveLidarDistance( nullptr ),
-				m_autoShoot( nullptr )
+				m_autoShoot( nullptr ),
+				m_resetPosition( nullptr )
 {
 }
 
@@ -112,8 +114,14 @@ IPrimitive* PrimitiveFactory::GetIPrimitive(PrimitiveParams* primitivePasser)
 			m_autoShoot = new AutoShoot();
 		}
 		primitive = new AutoShoot();
+	case RESET_POSITION :
+		if (m_resetPosition == nullptr)
+		{
+			m_resetPosition = new ResetPosition();
+		}
+		primitive = new ResetPosition();
 	default:
-		break;
+		break;	
 	}
 	return primitive;
 

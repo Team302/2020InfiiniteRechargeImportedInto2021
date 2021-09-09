@@ -1,4 +1,3 @@
-
 //====================================================================================================================================================
 // Copyright 2019 Lake Orion Robotics FIRST Team 302
 //
@@ -16,30 +15,37 @@
 
 #pragma once
 
-// C++ Includes
+//C++ Includes
+#include <memory>
 
-// FRC includes
+//FRC/WPI Includes
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <frc/trajectory/TrajectoryConfig.h>
+#include <frc/Filesystem.h>
+#include <wpi/SmallString.h>
+#include <wpi/Path.h>
 
-// Team 302 includes
+//Team 302 Includes
+#include <auton/primitives/IPrimitive.h>
 
-// Third Party Includes
+//Forward Declares
+class IChassis;
+class PrimitiveParams;
 
+class ResetPosition : public IPrimitive
+{
+    public:
+        ResetPosition();
 
+        virtual ~ResetPosition() = default;
 
-       enum PRIMITIVE_IDENTIFIER
-         {
-             UNKNOWN_PRIMITIVE = -1,
-             DO_NOTHING,
-             HOLD_POSITION,
-             DRIVE_DISTANCE,
-             DRIVE_TIME,
-			       DRIVE_TO_WALL,
-             TURN_ANGLE_ABS,
-             TURN_ANGLE_REL,
-             AUTO_SHOOT,
-             DRIVE_PATH,
-             RESET_POSITION,
-             MAX_AUTON_PRIMITIVES
-         };
+        void Init(PrimitiveParams* params) override;
 
+        void Run() override;
 
+        bool IsDone() override;
+    
+    private:
+        std::shared_ptr<IChassis> m_chassis;
+        frc::Trajectory                m_trajectory;
+};

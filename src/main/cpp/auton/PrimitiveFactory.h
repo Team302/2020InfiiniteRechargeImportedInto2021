@@ -51,5 +51,6 @@ private:
     IPrimitive* m_driveToWall;
     IPrimitive* m_driveLidarDistance;
     IPrimitive* m_autoShoot;
+    IPrimitive* m_resetPosition;
 };
 
