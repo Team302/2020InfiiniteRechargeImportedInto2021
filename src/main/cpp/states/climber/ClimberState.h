@@ -34,8 +34,7 @@ class ClimberState : public MechanismState
         ClimberState
         (
             ControlData*                    control,
-            double                          target,
-            MechanismTargetData::SOLENOID   solState
+            double                          target
         );
         ~ClimberState() =default;
 };

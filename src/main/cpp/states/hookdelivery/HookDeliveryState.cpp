@@ -33,8 +33,7 @@ using namespace std;
 HookDeliveryState::HookDeliveryState
 (
     ControlData*                    control,
-    double                          target,
-    MechanismTargetData::SOLENOID   solState
-) : MechanismState( MechanismFactory::GetMechanismFactory()->GetIMechanism(MechanismTypes::MECHANISM_TYPE::HOOK_DELIVERY), control, target, solState )
+    double                          target
+) : MechanismState( MechanismFactory::GetMechanismFactory()->GetIMechanism(MechanismTypes::MECHANISM_TYPE::HOOK_DELIVERY), control, target, MechanismTargetData::SOLENOID::NONE )
 {
 }
