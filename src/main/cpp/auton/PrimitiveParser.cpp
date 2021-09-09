@@ -64,6 +64,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
     primStringToEnumMap["TURN_ANGLE_ABS"] = TURN_ANGLE_ABS;
     primStringToEnumMap["TURN_ANGLE_REL"] = TURN_ANGLE_REL;
     primStringToEnumMap["AUTO_SHOOT"] = AUTO_SHOOT;
+    primStringToEnumMap["DRIVE_PATH"] = DRIVE_PATH;
+    primStringToEnumMap["RESET_POSITION"] = RESET_POSITION;
 
     map<string, BallManipulator::BALL_MANIPULATOR_STATE> ballStringToEnumMap;
     ballStringToEnumMap["OFF"] = BallManipulator::BALL_MANIPULATOR_STATE::OFF;
