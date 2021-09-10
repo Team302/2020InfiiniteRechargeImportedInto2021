@@ -73,5 +73,5 @@ double Turret::GetCurrentSpeed() const
 
 void Turret::SetControlConstants(ControlData* pid)
 {
-    m_turretMotor.get()->SetControlConstants(pid);
+    m_turretMotor.get()->SetControlConstants(0, pid);
 }

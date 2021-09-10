@@ -50,6 +50,7 @@ class DragonTalon : public IDragonMotorController
         // Setters (override)
         void SetControlMode(ControlModes::CONTROL_TYPE mode) override; //:D
         void Set(double value) override;
+        void Set(std::shared_ptr<nt::NetworkTable> nt, double value) override;
         void SetRotationOffset(double rotations) override;
         void SetVoltageRamping(double ramping, double rampingClosedLoop = -1) override; // seconds 0 to full, set to 0 to disable
         void EnableCurrentLimiting(bool enabled) override; 
@@ -58,9 +59,10 @@ class DragonTalon : public IDragonMotorController
         void SetSensorInverted(bool inverted) override;
 
         /// @brief  Set the control constants (e.g. PIDF values).
-        /// @param [in] ControlData*   pid - the control constants
+        /// @param [in] int             slot - hardware slot to use
+        /// @param [in] ControlData*    pid - the control constants
         /// @return void
-        void SetControlConstants(ControlData* controlInfo) override;
+        void SetControlConstants(int slot, ControlData* controlInfo) override;
         // Method:		SelectClosedLoopProfile
         // Description:	Selects which profile slot to use for closed-loop control
         // Returns:		void
@@ -82,7 +84,7 @@ class DragonTalon : public IDragonMotorController
         int ConfigPeakCurrentDuration(int milliseconds, int timeoutMs); 
         int ConfigContinuousCurrentLimit(int amps, int timeoutMs); 
 
-        void SetAsSlave(int masterCANID); 
+        void SetAsFollowerMotor(int masterCANID); 
 
         void SetForwardLimitSwitch
         ( 
@@ -102,6 +104,24 @@ class DragonTalon : public IDragonMotorController
 
         void SetDiameter( double diameter ) override;
 
+        double GetCountsPerRev() const override {return m_countsPerRev;}
+        void UpdateFramePeriods
+        (
+	        ctre::phoenix::motorcontrol::StatusFrameEnhanced	frame,
+            uint8_t			                                    milliseconds
+        ) override;
+        
+        void SetFramePeriodPriority
+        (
+            MOTOR_PRIORITY              priority
+        ) override;
+
+        void SetVoltage
+        (
+            units::volt_t output
+        ) override;
+
+        double GetGearRatio() const override { return m_gearRatio;}
 
     private:
         std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_TalonSRX>  m_talon;

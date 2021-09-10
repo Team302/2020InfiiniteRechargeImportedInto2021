@@ -1,24 +1,16 @@
-/*
- * DragonMotorControllerFactory.cpp
- *
- */
-#include <iostream>
+
 #include <map>
 #include <string>
 
-#include <subsys/IMechanism.h>
 #include <hw/factories/DragonMotorControllerFactory.h>        
 #include <hw/usages/MotorControllerUsage.h>
-#include <xmlhw/MotorDefn.h>
 #include <hw/DragonTalon.h>
 #include <hw/DragonFalcon.h>
-#include <hw/DragonSparkMax.h>
 #include <utils/Logger.h>
 
 #include <ctre/phoenix/motorcontrol/can/TalonSRX.h>
 #include <ctre/phoenix/motorcontrol/can/TalonFX.h>
 #include <ctre/phoenix/motorcontrol/FeedbackDevice.h>
-#include <rev/CANSparkMax.h>
 
 using namespace std;
 using namespace ctre::phoenix::motorcontrol;
@@ -62,7 +54,7 @@ shared_ptr<IDragonMotorController> DragonMotorControllerFactory::CreateMotorCont
     int 											countsPerRev,
     float 											gearRatio,
     bool 											brakeMode,
-    int 											slaveTo,
+    int 											followMotor,
     int 											peakCurrentDuration,
     int 											continuousCurrentLimit,
     int 											peakCurrentLimit,
@@ -76,7 +68,7 @@ shared_ptr<IDragonMotorController> DragonMotorControllerFactory::CreateMotorCont
     shared_ptr<IDragonMotorController> controller;
 
     auto hasError = false;
-
+    
     auto type = m_typeMap.find(mtype)->second;
     if ( type == MOTOR_TYPE::TALONSRX )
     {
@@ -100,9 +92,9 @@ shared_ptr<IDragonMotorController> DragonMotorControllerFactory::CreateMotorCont
             talon->SetForwardLimitSwitch(reverseLimitSwitchNormallyOpen);
         }
 
-        if ( slaveTo > -1 )
+        if ( followMotor > -1 )
         {
-            talon->SetAsSlave( slaveTo );
+            talon->SetAsFollowerMotor( followMotor );
         }
         controller.reset( talon );
     }
@@ -111,14 +103,12 @@ shared_ptr<IDragonMotorController> DragonMotorControllerFactory::CreateMotorCont
         auto talon = new DragonFalcon( MotorControllerUsage::GetInstance()->GetUsage(usage), canID, pdpID, countsPerRev, gearRatio );
         talon->EnableBrakeMode( brakeMode );
         talon->Invert( inverted );
+        /**
         talon->SetSensorInverted( sensorInverted );
+        **/
         talon->ConfigSelectedFeedbackSensor( feedbackDevice, 0, 50 );
         talon->ConfigSelectedFeedbackSensor( feedbackDevice, 1, 50 );
 
-        /*talon->ConfigPeakCurrentLimit( 40, 50 );
-        talon->ConfigPeakCurrentDuration( 1, 50 );
-        talon->ConfigContinuousCurrentLimit( 30, 50 );
-        talon->EnableCurrentLimiting( true );*/
         if ( forwardLimitSwitch )
         {
             talon->SetForwardLimitSwitch(forwardLimitSwitchNormallyOpen);
@@ -128,40 +118,12 @@ shared_ptr<IDragonMotorController> DragonMotorControllerFactory::CreateMotorCont
             talon->SetForwardLimitSwitch(reverseLimitSwitchNormallyOpen);
         }
         
-        if ( slaveTo > -1 )
+        if ( followMotor > -1 )
         {
-            talon->SetAsSlave( slaveTo );
+            talon->SetAsFollowerMotor( followMotor );
         }
+        /** **/
         controller.reset( talon );
-    }
-    else if ( type == MOTOR_TYPE::BRUSHED_SPARK_MAX || type == MOTOR_TYPE::BRUSHLESS_SPARK_MAX )
-    {
-        auto brushedBrushless = (type == MOTOR_TYPE::BRUSHED_SPARK_MAX) ? rev::CANSparkMax::MotorType::kBrushed : rev::CANSparkMax::MotorType::kBrushless;
-        auto smax = new DragonSparkMax( canID, pdpID, MotorControllerUsage::GetInstance()->GetUsage(usage), brushedBrushless, gearRatio );
-        smax->Invert( inverted );
-        smax->EnableBrakeMode( brakeMode );
-        smax->SetSensorInverted( sensorInverted );
-        smax->EnableCurrentLimiting( enableCurrentLimit );
-        smax->SetSmartCurrentLimiting( continuousCurrentLimit );
-        if ( slaveTo > -1 )
-        {
-            DragonSparkMax* master = nullptr;
-            if ( GetController( slaveTo ) != nullptr )
-            {
-                master = dynamic_cast<DragonSparkMax*>( GetController( slaveTo ).get() );
-            }
-            if ( master != nullptr )
-            {
-                smax->Follow( master );
-            }
-            else
-            {
-                string msg = "invalid Slave to ID ";
-                msg += to_string( slaveTo );
-                Logger::GetLogger()->LogError( "DragonMotorControllerFactory::CreateMotorController", msg );
-            }
-        }
-        controller.reset( smax );
     }
     else
     {
@@ -206,6 +168,4 @@ void DragonMotorControllerFactory::CreateTypeMap()
 {
     m_typeMap["TALONSRX"] = DragonMotorControllerFactory::MOTOR_TYPE::TALONSRX;
     m_typeMap["FALCON"] = DragonMotorControllerFactory::MOTOR_TYPE::FALCON;
-    m_typeMap["BRUSHLESS_SPARK_MAX"] = DragonMotorControllerFactory::MOTOR_TYPE::BRUSHLESS_SPARK_MAX;
-    m_typeMap["BRUSHED_SPARK_MAX"] = DragonMotorControllerFactory::MOTOR_TYPE::BRUSHED_SPARK_MAX;
 }

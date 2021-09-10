@@ -83,6 +83,6 @@ double Shooter::GetCurrentSpeed() const
 
 void Shooter::SetControlConstants(ControlData* pid)
 {
-    m_topMotor.get()->SetControlConstants(pid);
-    m_bottomMotor.get()->SetControlConstants(pid);
+    m_topMotor.get()->SetControlConstants(0, pid);
+    m_bottomMotor.get()->SetControlConstants(0, pid);
 }

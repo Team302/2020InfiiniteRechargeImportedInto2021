@@ -157,5 +157,5 @@ void Impeller::SetControlConstants
     ControlData*                                pid                 
 )
 {
-    m_motor.get()->SetControlConstants( pid );
+    m_motor.get()->SetControlConstants( 0, pid );
 }

@@ -155,7 +155,7 @@ void ControlPanel::SetControlConstants
     ControlData*                                pid                 
 )
 {
-    m_spinner.get()->SetControlConstants( pid );
+    m_spinner.get()->SetControlConstants( 0, pid );
 }
 
 ControlPanelColors::COLOR ControlPanel::GetColorSeen()

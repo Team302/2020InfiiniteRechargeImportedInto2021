@@ -110,7 +110,7 @@ void Climber::SetControlConstants
 )
 {
     // todo:  need to account for voltage mode
-    m_motorMaster.get()->SetControlConstants(pid);
+    m_motorMaster.get()->SetControlConstants(0, pid);
 }
 
 

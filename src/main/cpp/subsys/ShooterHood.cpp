@@ -102,5 +102,5 @@ void ShooterHood :: SetControlConstants
 ControlData*                                pid                  
 )  
 { 
-    m_shmotor.get()->SetControlConstants( pid );
+    m_shmotor.get()->SetControlConstants( 0, pid );
 } 
