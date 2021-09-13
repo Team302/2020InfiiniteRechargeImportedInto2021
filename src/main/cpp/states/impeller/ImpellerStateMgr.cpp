@@ -86,7 +86,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                     {   
                         auto thisState = new ImpellerState(controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller Hold State added to Map");
                     }
                     break;
 
@@ -94,7 +93,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                     {   
                         auto thisState = new ImpellerState(controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller To Shooter State added to Map");
                     }
                     break;
 
@@ -105,7 +103,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                         m_currentState = thisState;
                         m_currentStateEnum = stateEnum;
                         m_currentState->Init();
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller Off State added to Map");
                     }
                     break;
 
@@ -113,7 +110,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                     {   
                         auto thisState = new ImpellerState(controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller Agitate State added to Map");
                     }
                     break;
 
@@ -169,15 +165,10 @@ void ImpellerStateMgr::RunCurrentState()
             }
         }
 
-
-        
-        Logger::GetLogger()->OnDash(string("Impeller State"), to_string(m_currentStateEnum));
-
         // run the current state
         if ( m_currentState != nullptr )
         {
             m_currentState->Run();
-            Logger::GetLogger()->LogError("Logger::SetCurrentState", "Running Current State");
         }
     }
 

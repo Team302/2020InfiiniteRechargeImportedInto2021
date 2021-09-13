@@ -129,8 +129,6 @@ void ClimberStateMgr::RunCurrentState()
         }
     }
 
-    Logger::GetLogger()->OnDash(string("Climber State"), to_string(m_currentStateEnum));
-
     // run the current state
     if ( m_currentState != nullptr )
     {

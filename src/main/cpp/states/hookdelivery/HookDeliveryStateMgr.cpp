@@ -162,10 +162,6 @@ void HookDeliveryStateMgr::SetCurrentState
     bool                    run
 )
 {
-   
-    
-    
-    Logger::GetLogger()->LogError( string("about to set state current "), to_string(stateEnum));
     auto state = m_stateVector[stateEnum];
     if ( state != nullptr && state != m_currentState)
     {    

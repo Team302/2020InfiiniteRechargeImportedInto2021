@@ -83,7 +83,6 @@ BallTransferStateMgr::BallTransferStateMgr() : m_currentState(),
                 {
                     case BALL_TRANSFER_STATE::OFF:
                     {   
-                        Logger::GetLogger()->LogError(string("creating ball transfer off"), string(""));
                         auto thisState = new BallTransferOff( controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
                         m_currentState = thisState;
@@ -94,7 +93,6 @@ BallTransferStateMgr::BallTransferStateMgr() : m_currentState(),
 
                     case BALL_TRANSFER_STATE::TO_IMPELLER:
                     {   
-                        Logger::GetLogger()->LogError(string("creating ball transfer to impeller"), string(""));
                         auto thisState = new BallTransferToImpeller( controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
                     }
@@ -102,7 +100,6 @@ BallTransferStateMgr::BallTransferStateMgr() : m_currentState(),
 
                     case BALL_TRANSFER_STATE::TO_SHOOTER:
                     {   
-                        Logger::GetLogger()->LogError(string("creating ball transfer to shooter"), string(""));
                         auto thisState = new BallTransferToShooter( controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
                     }
@@ -163,9 +160,6 @@ void BallTransferStateMgr::RunCurrentState()
             }
         }
         
-
-        Logger::GetLogger()->OnDash(string("Ball Transfer State"), to_string(m_currentStateEnum));
-
         // run the current state
         if ( m_currentState != nullptr )
         {
@@ -183,10 +177,6 @@ void BallTransferStateMgr::SetCurrentState
     bool                    run
 )
 {
-   
-    
-    
-    Logger::GetLogger()->LogError( string("about to set state current "), to_string(stateEnum));
     auto state = m_stateVector[stateEnum];
     if ( state != nullptr && state != m_currentState)
     {    

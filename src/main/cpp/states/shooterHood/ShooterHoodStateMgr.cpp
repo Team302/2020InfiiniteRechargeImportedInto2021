@@ -139,7 +139,6 @@ void ShooterHoodStateMgr::RunCurrentState()
             if (controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::SHOOTER_HOOD_MANUAL_BUTTON))
             {
                 SetCurrentState( SHOOTER_HOOD_STATE::MANUAL, false ); 
-                Logger::GetLogger()->LogError("ShootHoodStateMgr::SetCurrentState", "Shooter Hood State Manual Hood");
             }
             
             /*if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::SHOOTER_HOOD_MOVE_UP ) && 
@@ -159,7 +158,6 @@ void ShooterHoodStateMgr::RunCurrentState()
             }*/
         }
 
-    Logger::GetLogger()->OnDash(string("Shooterhood State"), to_string(m_currentStateEnum));
         // run the current state
         if ( m_currentState != nullptr )
         {

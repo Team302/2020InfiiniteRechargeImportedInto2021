@@ -114,12 +114,16 @@ IPrimitive* PrimitiveFactory::GetIPrimitive(PrimitiveParams* primitivePasser)
 			m_autoShoot = new AutoShoot();
 		}
 		primitive = new AutoShoot();
+		break;
+
 	case RESET_POSITION :
 		if (m_resetPosition == nullptr)
 		{
 			m_resetPosition = new ResetPosition();
 		}
 		primitive = new ResetPosition();
+		break;
+		
 	default:
 		break;	
 	}

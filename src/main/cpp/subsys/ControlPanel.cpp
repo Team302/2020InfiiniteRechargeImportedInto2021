@@ -61,11 +61,6 @@ ControlPanel::ControlPanel
     m_colorMatcher->AddColorMatch(kYellowTarget);
 }
 
-//ControlPanel::~ControlPanel)()
-//{
-//    delete m_spinner;
-//    delete m_manipulatorExtender;
-//}
 MechanismTypes::MECHANISM_TYPE ControlPanel::GetType() const 
 {
     return MechanismTypes::MECHANISM_TYPE::CONTROL_TABLE_MANIPULATOR;

@@ -56,37 +56,30 @@ void ChassisStateMgr::Init()
     if ( m_currentState == CHASSIS_STATE::TELEOP )
     {
         m_driveModeSelected = m_driveModeChooser.GetSelected();
-        Logger::GetLogger()->LogError( string("ChassisStateMgr"), m_driveModeSelected );
         if( m_driveModeSelected == m_driveModeArcade || m_driveModeSelected == m_driveModeArcadeCurve ) 
         {
             m_currentDrive = m_arcade;
             m_arcade->SetCurvatureBased( ( m_driveModeSelected == m_driveModeArcadeCurve ) );
-            Logger::GetLogger()->LogError(string("ChassisStateMgr"), string("arcade"));
         }
         else if ( m_driveModeSelected == m_driveModeGTA || m_driveModeSelected == m_driveModeGTACurve )
         {
             m_currentDrive = m_gta;
             m_gta->SetCurvatureBased( ( m_driveModeSelected == m_driveModeGTACurve ) );
-            Logger::GetLogger()->LogError(string("ChassisStateMgr"), string("gta"));
         }
         else if ( m_driveModeSelected == m_driveModeTank )
         {
             m_currentDrive = m_tank;
-            Logger::GetLogger()->LogError(string("ChassisStateMgr"), string("tank"));
         }
         else
         {
             m_currentDrive = m_arcade;
-            Logger::GetLogger()->LogError(string("ChassisStateMgr"), string("arcade2"));
         }
 
         m_currentDrive.get()->Init();
-//        m_currentDrive->Run();
    }
     else if ( m_currentState == CHASSIS_STATE::AUTON )
     {
         m_cyclePrims.get()->Init();
- //       m_cyclePrims.get()->Run();
     }
 }
 

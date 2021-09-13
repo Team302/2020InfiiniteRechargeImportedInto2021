@@ -70,7 +70,6 @@ DragonTalon::DragonTalon
 	if ( error != ErrorCode::OKAY )
 	{
 		m_talon.get()->ConfigFactoryDefault();
-		Logger::GetLogger()->LogError(prompt, string("ConfigFactoryDefault error"));
 		error = ErrorCode::OKAY;
 	}
 
@@ -79,41 +78,35 @@ DragonTalon::DragonTalon
 	error = m_talon.get()->ConfigNeutralDeadband(0.01, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigNeutralDeadband error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigNominalOutputForward(0.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
 		m_talon.get()->ConfigNominalOutputForward(0.0, 0);
-		Logger::GetLogger()->LogError(prompt, string("ConfigNominalOutputForward error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigNominalOutputReverse(0.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
 		m_talon.get()->ConfigNominalOutputReverse(0.0, 0);
-		Logger::GetLogger()->LogError(prompt, string("ConfigNominalOutputReverse error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigOpenloopRamp(1.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigOpenloopRamp error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigPeakOutputForward(1.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
 		m_talon.get()->ConfigPeakOutputForward(1.0, 0);
-		Logger::GetLogger()->LogError(prompt, string("ConfigPeakOutputForward error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigPeakOutputReverse(-1.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
 		m_talon.get()->ConfigPeakOutputReverse(-1.0, 0);
-		Logger::GetLogger()->LogError(prompt, string("ConfigPeakOutputReverse error"));
 		error = ErrorCode::OKAY;
 	}
 
@@ -125,53 +118,45 @@ DragonTalon::DragonTalon
 	error = m_talon.get()->ConfigSupplyCurrentLimit(climit, 50);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigSupplyCurrentLimit error"));
 		error = ErrorCode::OKAY;
 	}
 
 	error = m_talon.get()->ConfigVoltageCompSaturation(12.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigVoltageCompSaturation error"));
 		error = ErrorCode::OKAY;
 	}
 
 	error = m_talon.get()->ConfigForwardLimitSwitchSource(LimitSwitchSource::LimitSwitchSource_Deactivated, LimitSwitchNormal::LimitSwitchNormal_Disabled, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigForwardLimitSwitchSource error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigReverseLimitSwitchSource(LimitSwitchSource::LimitSwitchSource_Deactivated, LimitSwitchNormal::LimitSwitchNormal_Disabled, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigReverseLimitSwitchSource error"));
 		error = ErrorCode::OKAY;
 	}
 
 	error = m_talon.get()->ConfigForwardSoftLimitEnable(false, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigForwardSoftLimitEnable error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigForwardSoftLimitThreshold(0.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigForwardSoftLimitThreshold error"));
 		error = ErrorCode::OKAY;
 	}
 
 	error = m_talon.get()->ConfigReverseSoftLimitEnable(false, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigReverseSoftLimitEnable error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigReverseSoftLimitThreshold(0.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigReverseSoftLimitThreshold error"));
 		error = ErrorCode::OKAY;
 	}
 	
@@ -179,39 +164,33 @@ DragonTalon::DragonTalon
 	error = m_talon.get()->ConfigMotionAcceleration(1500.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigMotionAcceleration error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigMotionCruiseVelocity(1500.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigMotionCruiseVelocity error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigMotionSCurveStrength(0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigMotionSCurveStrength error"));
 		error = ErrorCode::OKAY;
 	}
 
 	error = m_talon.get()->ConfigMotionProfileTrajectoryPeriod(0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigMotionProfileTrajectoryPeriod error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigMotionProfileTrajectoryInterpolationEnable(true, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigMotionProfileTrajectoryInterpolationEnable error"));
 		error = ErrorCode::OKAY;
 	}
 
 	m_talon.get()->ConfigAllowableClosedloopError(0.0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigAllowableClosedloopError error"));
 		error = ErrorCode::OKAY;
 	}
 
@@ -220,43 +199,36 @@ DragonTalon::DragonTalon
 		error = m_talon.get()->ConfigClosedLoopPeakOutput(inx, 1.0, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("ConfigClosedLoopPeakOutput error"));
 			error = ErrorCode::OKAY;
 		}
 		error = m_talon.get()->ConfigClosedLoopPeriod(inx, 10, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("ConfigClosedLoopPeriod error"));
 			error = ErrorCode::OKAY;
 		}
 		error = m_talon.get()->Config_kP(inx, 0.01, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("Config_kP error"));
 			error = ErrorCode::OKAY;
 		}
 		error = m_talon.get()->Config_kI(inx, 0.0, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("Config_kI error"));
 			error = ErrorCode::OKAY;
 		}
 		error = m_talon.get()->Config_kD(inx, 0.0, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("Config_kD error"));
 			error = ErrorCode::OKAY;
 		}
 		error = m_talon.get()->Config_kF(inx, 1.0, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("Config_kF error"));
 			error = ErrorCode::OKAY;
 		}
 		error = m_talon.get()->Config_IntegralZone(inx, 0.0, 0);
 		if ( error != ErrorCode::OKAY )
 		{
-			Logger::GetLogger()->LogError(prompt, string("Config_IntegralZone error"));
 			error = ErrorCode::OKAY;
 		}
 	}
@@ -264,7 +236,6 @@ DragonTalon::DragonTalon
 	error = m_talon.get()->ConfigRemoteFeedbackFilter(60, RemoteSensorSource::RemoteSensorSource_Off, 0, 0);
 	if ( error != ErrorCode::OKAY )
 	{
-		Logger::GetLogger()->LogError(prompt, string("ConfigRemoteFeedbackFilter error"));
 		error = ErrorCode::OKAY;
 	}
 	error = m_talon.get()->ConfigRemoteFeedbackFilter(60, RemoteSensorSource::RemoteSensorSource_Off, 1, 0);
@@ -369,11 +340,8 @@ void DragonTalon::SetFramePeriodPriority
 
 void DragonTalon::Set(std::shared_ptr<nt::NetworkTable> nt, double value)
 {
-	Logger::GetLogger()->ToNtTable(nt, string("motor id"), m_talon.get()->GetDeviceID());
-
 	if ( m_controlMode == ControlModes::CONTROL_TYPE::VOLTAGE)
 	{
-		Logger::GetLogger()->ToNtTable(nt, string("motor target output voltage"), value);
 		m_talon.get()->SetVoltage(units::voltage::volt_t(value));
 	}
 	else
@@ -416,7 +384,6 @@ void DragonTalon::Set(std::shared_ptr<nt::NetworkTable> nt, double value)
 				break;
 
 			default:
-				Logger::GetLogger()->LogError( string("DragonTalon::SetControlMode"), string("Invalid Control Mode"));
 				ctreMode = ctre::phoenix::motorcontrol::ControlMode::PercentOutput;
 				break;
 		}	
@@ -447,14 +414,9 @@ void DragonTalon::Set(std::shared_ptr<nt::NetworkTable> nt, double value)
 			default:
 				break;
 		}	
-
-		Logger::GetLogger()->ToNtTable(nt, string("motor target output"), output);
-
 		m_talon.get()->Set( ctreMode, output );
 
 	}
-	Logger::GetLogger()->ToNtTable(nt, string("motor current percent output"), m_talon.get()->Get() );
-	Logger::GetLogger()->ToNtTable(nt, string("motor current RPS"), GetRPS() );
 }
 
 void DragonTalon::Set(double value)
@@ -528,7 +490,6 @@ void DragonTalon::SelectClosedLoopProfile
 	{
 		auto prompt = string("Dragon Talon");
 		prompt += to_string(m_talon.get()->GetDeviceID());
-		Logger::GetLogger()->LogError(prompt, string("SelectProfileSlot error"));
 	}
 }
 
@@ -648,10 +609,6 @@ void DragonTalon::SetControlConstants(int slot, ControlData* controlInfo)
 	auto id = m_talon.get()->GetDeviceID();
 	auto ntName = std::string("MotorOutput");
 	ntName += to_string(id);
-	Logger::GetLogger()->ToNtTable(ntName, string("P"), controlInfo->GetP());
-	Logger::GetLogger()->ToNtTable(ntName, string("I"), controlInfo->GetI());
-	Logger::GetLogger()->ToNtTable(ntName, string("D"), controlInfo->GetD());
-	Logger::GetLogger()->ToNtTable(ntName, string("F"), controlInfo->GetF());
 
 	auto peak = controlInfo->GetPeakValue();
 	auto error = m_talon.get()->ConfigPeakOutputForward(peak);
@@ -692,25 +649,21 @@ void DragonTalon::SetControlConstants(int slot, ControlData* controlInfo)
 		if ( error != ErrorCode::OKAY )
 		{
 			m_talon.get()->Config_kP(slot, controlInfo->GetP());
-			Logger::GetLogger()->LogError(prompt, string("Config_kP error"));
 		}
 		error = m_talon.get()->Config_kI(slot, controlInfo->GetI());
 		if ( error != ErrorCode::OKAY )
 		{
 			m_talon.get()->Config_kI(slot, controlInfo->GetI());
-			Logger::GetLogger()->LogError(prompt, string("Config_kI error"));
 		}
 		error = m_talon.get()->Config_kD(slot, controlInfo->GetD());
 		if ( error != ErrorCode::OKAY )
 		{
 			m_talon.get()->Config_kD(slot, controlInfo->GetD());
-			Logger::GetLogger()->LogError(prompt, string("Config_kD error"));
 		}
 		error = m_talon.get()->Config_kF(slot, controlInfo->GetF());
 		if ( error != ErrorCode::OKAY )
 		{
 			m_talon.get()->Config_kF(slot, controlInfo->GetF());
-			Logger::GetLogger()->LogError(prompt, string("Config_kF error"));
 		}
 		error = m_talon.get()->SelectProfileSlot(slot, 0);
 		if ( error != ErrorCode::OKAY )

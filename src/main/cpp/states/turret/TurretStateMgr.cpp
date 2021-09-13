@@ -131,7 +131,6 @@ void TurretStateMgr::RunCurrentState()
                 SetCurrentState( TURRET_STATE::LIMELIGHT_AIM, false, 0.0);
             }
         }
-        Logger::GetLogger()->OnDash(string("Turret State"), to_string(m_currentStateEnum));
         if ( m_currentState != nullptr )
         {
             m_currentState->Run();
