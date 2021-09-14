@@ -19,6 +19,7 @@
 // C++ Includes
 //#define _USE_MATH_DEFINES
 //#include <cmath>
+#include <iostream>
 
 // FRC includes
 #include <wpi/math>
@@ -28,6 +29,7 @@
 // Third Party Includes
 
 using namespace wpi::math;
+using namespace std;
 
 //constexpr double PI = 3.14159265358979323846;
 
@@ -115,7 +117,16 @@ class ConversionUtils
 		/// @param [in] revolutions per second
 		/// @param [in] counts per revolution
 		/// @return double units / 100 ms
-		inline static double RPSToCounts100ms( double rps, int countsPerRev ) { return rps*(double)countsPerRev / 10.0; }  // rev / sec * counts / rev  * 0.1 sec/100 ms
+		inline static double RPSToCounts100ms( double rps, int countsPerRev ) 
+			{ 
+//				cout << "RPS : " << rps << endl;  
+//				cout << "counts : " << countsPerRev << endl;  
+//				auto val = rps*(double)countsPerRev / 10.0;
+//				cout << "return value : " << val << endl;  
+				
+//	return rps*(double)countsPerRev / 600.0; 
+				return rps*(double)countsPerRev / 10.0; 
+			}  // rev / sec * counts / rev  * 0.1 sec/100 ms
 		
 		/// @brief Convert from Degrees per second to RPS
 		/// @param [in] Degrees per second

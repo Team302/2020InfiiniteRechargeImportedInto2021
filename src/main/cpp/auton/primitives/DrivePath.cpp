@@ -15,6 +15,7 @@
 
 //C++
 #include <string>
+#include <iostream>
 
 //FRC Includes
 #include <frc/PIDController.h>
@@ -71,6 +72,9 @@ void DrivePath::Init(PrimitiveParams *params)
 
     GetTrajectory(params->GetPathName());
     Logger::GetLogger()->ToNtTable(m_pathname + "Trajectory", "Time", m_trajectory.TotalTime().to<double>());
+
+    cout << "pathname " << params->GetPathName() << " trajectory states " << m_trajectoryStates.size();
+
     if (!m_trajectoryStates.empty()) // only go if path name found
     {
         m_desiredState = m_trajectoryStates.front();
@@ -128,7 +132,7 @@ void DrivePath::Run()
         Logger::GetLogger()->ToNtTable("DrivePathValues", "ChassisSpeedsZ", units::degrees_per_second_t(refChassisSpeeds.omega()).to<double>());
 
         // Run the chassis
-        //m_chassis->SetOutput(refChassisSpeeds);
+        m_chassis->SetOutput(refChassisSpeeds);
     }
     else
     {

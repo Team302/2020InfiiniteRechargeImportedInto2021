@@ -34,6 +34,7 @@
 #include <memory>
 #include <string>
 #include <cstring>
+#include <iostream>
 
 // FRC includes
 
@@ -118,6 +119,8 @@ vector<MechanismTargetData*> StateDataDefn::ParseXML
             hasError = true;
             break;
     }
+
+    std::cout << filename << endl;
 
     if ( !hasError )
     {

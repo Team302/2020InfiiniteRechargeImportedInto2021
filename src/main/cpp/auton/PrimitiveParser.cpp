@@ -14,7 +14,10 @@
 //====================================================================================================================================================
 
 
+#include <iostream>
 #include <map>
+
+
 #include <auton/PrimitiveParser.h>
 
 #include <pugixml/pugixml.hpp>
@@ -168,6 +171,7 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                     }
                     if ( !hasError )
                     {   
+                        cout << "Primitive Type " << primitiveType << endl;
                         paramVector.emplace_back( new PrimitiveParams( primitiveType,
                                                                        time,
                                                                        distance,

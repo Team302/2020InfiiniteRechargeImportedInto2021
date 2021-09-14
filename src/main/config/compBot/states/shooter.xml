@@ -5,8 +5,18 @@
 	             mode="PERCENT_OUTPUT"/>
 	<controlData identifier="closedloop"
 				 mode="VELOCITY_RPS"
-				 proportional="0.03"
-				 feedforward="0.75"/>
+				 proportional="0.05"
+          		 integral="0.001"
+          		 derivative="5.0"
+			     izone="300.0"
+				 feedforward="0.0495"/>
+	<controlData identifier="closedloopxxx"
+				 mode="VELOCITY_RPS"
+				 proportional="0.1"
+          		 integral="0.001"
+          		 derivative="5.0"
+			     izone="300.0"
+				 feedforward="0.0495"/>
 	<mechanismTarget stateIdentifier="SHOOTEROFF"
 	                 controlDataIdentifier="openloop"
 					 value="0.0"/>
@@ -15,6 +25,9 @@
 					 value="0.5"/>
 	<mechanismTarget stateIdentifier="SHOOTERSHOOT"
 	                 controlDataIdentifier="closedloop"
-					 value="36.50"/>
+					 value="36.0"/>
+	<!--mechanismTarget stateIdentifier="SHOOTERSHOOT"
+	                 controlDataIdentifier="closedloop"
+					 value="36.0"/ -->
 
 </statedata>

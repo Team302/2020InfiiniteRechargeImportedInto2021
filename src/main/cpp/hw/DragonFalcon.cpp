@@ -423,6 +423,7 @@ void DragonFalcon::Set(std::shared_ptr<nt::NetworkTable> nt, double value)
 
 			case ControlModes::CONTROL_TYPE::VELOCITY_RPS:
 				output = (ConversionUtils::RPSToCounts100ms( value, m_countsPerRev ) * m_gearRatio);
+//				cout << "RPS to Counts Per 100 ms: " << value << " " << output << endl;  // should be ~123
 				break;
 
 			default:

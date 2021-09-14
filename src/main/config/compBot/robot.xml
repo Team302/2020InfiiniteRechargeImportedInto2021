@@ -118,7 +118,7 @@
 	<mechanism type="INTAKE">
 		<motor usage="INTAKE"
 				canId="11"
-				pdpID="7"
+				pdpID="11"
 				type="TALONSRX"
 				inverted="true"
 				sensorInverted="false"

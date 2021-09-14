@@ -23,6 +23,9 @@ MechanismTypes::MECHANISM_TYPE Shooter::GetType() const
 
 void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double value)
 {
+    //auto value2 = 0.75 * value;
+    SetOutput(controlType, value, value);
+    /**
     switch(controlType)
     {
         case ControlModes::CONTROL_TYPE::PERCENT_OUTPUT:
@@ -37,8 +40,10 @@ void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double value)
     }
     m_topMotor.get()->SetControlMode(controlType);
     m_bottomMotor.get()->SetControlMode(controlType);
+    //auto val1 = 0.75 * value;
     m_topMotor.get()->Set(value);
     m_bottomMotor.get()->Set(value);
+    **/
 }
 
 void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double upperValue, double lowerValue)
