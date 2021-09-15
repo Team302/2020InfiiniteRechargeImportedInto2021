@@ -9,6 +9,12 @@
 #include "hw/interfaces/IDragonMotorController.h"
 #include "subsys/MechanismTypes.h"
 #include "controllers/ControlModes.h"
+
+//FRC Includes
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableEntry.h>
+
 Shooter::Shooter(std::shared_ptr<IDragonMotorController> motor1,
 std::shared_ptr<IDragonMotorController> motor2
 ): m_topMotor(motor1),
@@ -66,8 +72,9 @@ void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double upperValu
     m_topMotor.get()->Set(upperValue);
     m_bottomMotor.get()->Set(lowerValue);
 
-    std::cout << "Top motor speed: " + std::to_string(upperValue);
-    std::cout << "Bottom motor speed: " + std::to_string(lowerValue);
+    auto table = nt::NetworkTableInstance::GetDefault().GetTable("DebugShooterSpeeds");
+	table.get()->PutNumber("Top motor speed:", upperValue);
+    table.get()->PutNumber("Bottom motor speed:", lowerValue);
 }
 
 void Shooter::ActivateSolenoid(bool activate)
