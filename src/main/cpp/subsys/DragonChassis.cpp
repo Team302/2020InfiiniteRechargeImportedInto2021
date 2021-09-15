@@ -17,6 +17,7 @@
 
 // C++ Includes
 #include <memory>
+#include <iostream>
 
 // FRC includes
 #include <frc/geometry/Pose2d.h>
@@ -108,6 +109,9 @@ void DragonChassis::SetOutput
 
     auto left = throttle - steer;
     auto right = throttle + steer;
+
+    cout << "chassis left: " << left << endl;
+    cout << "chassis right " << right << endl;
 
     SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, left, right);
 }
