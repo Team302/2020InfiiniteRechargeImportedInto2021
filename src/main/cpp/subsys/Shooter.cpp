@@ -65,6 +65,9 @@ void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double upperValu
     m_bottomMotor.get()->SetControlMode(controlType);
     m_topMotor.get()->Set(upperValue);
     m_bottomMotor.get()->Set(lowerValue);
+
+    std::cout << "Top motor speed: " + std::to_string(upperValue);
+    std::cout << "Bottom motor speed: " + std::to_string(lowerValue);
 }
 
 void Shooter::ActivateSolenoid(bool activate)

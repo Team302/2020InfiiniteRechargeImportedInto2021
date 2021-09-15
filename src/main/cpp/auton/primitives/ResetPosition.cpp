@@ -46,7 +46,7 @@ void ResetPosition::Init(PrimitiveParams* params)
         m_trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDir);
 
         frc::Rotation2d StartAngle;
-        StartAngle.Degrees() = m_trajectory.InitialPose().Rotation().Degrees();
+        StartAngle.Degrees() = (m_trajectory.InitialPose().Rotation().Degrees() + units::degree_t(180));
 
         m_chassis->ResetPose(m_trajectory.InitialPose());
 
