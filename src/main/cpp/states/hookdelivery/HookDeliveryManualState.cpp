@@ -38,6 +38,11 @@ HookDeliveryManualState::HookDeliveryManualState
     MechanismTargetData::SOLENOID   solState
 ) : MechanismState( MechanismFactory::GetMechanismFactory()->GetIMechanism(MechanismTypes::MECHANISM_TYPE::HOOK_DELIVERY), control, target, solState )
 {
+    auto ctl = TeleopControl::GetInstance();
+    if (ctl != nullptr)
+    {
+        ctl->SetAxisProfile( TeleopControl::FUNCTION_IDENTIFIER::MANUAL_HOOK_CONTROL_UP, IDragonGamePad::AXIS_PROFILE::CUBED );
+    }
 }
 
 
@@ -48,8 +53,13 @@ void HookDeliveryManualState::Run()
     if ( mech != nullptr && ctl != nullptr )
     {
         auto up = ctl->GetAxisValue( TeleopControl::FUNCTION_IDENTIFIER::MANUAL_HOOK_CONTROL_UP );
-        auto down = ctl->GetAxisValue( TeleopControl::FUNCTION_IDENTIFIER::MANUAL_HOOK_CONTROL_DOWN );
-        mech->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, (up-down) );
+        if ( abs(up) < 0.1)
+        {
+            up = 0.0;
+        }
+        //auto down = ctl->GetAxisValue( TeleopControl::FUNCTION_IDENTIFIER::MANUAL_HOOK_CONTROL_DOWN );
+        //mech->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, (up-down) );
+        mech->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, up );
 
     }
 }

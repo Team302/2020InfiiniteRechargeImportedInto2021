@@ -17,12 +17,14 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <iostream>
 
 // FRC includes
 
 // Team 302 includes
 #include <states/IState.h>
 #include <states/hookdelivery/HookDeliveryStateMgr.h>
+#include <states/hookdelivery/HookDeliveryManualState.h>
 #include <xmlmechdata/StateDataDefn.h>
 #include <controllers/MechanismTargetData.h>
 #include <utils/Logger.h>
@@ -90,7 +92,8 @@ HookDeliveryStateMgr::HookDeliveryStateMgr() : m_currentState(),
 
                     case HOOK_DELIVERY_STATE::UP:
                     {   
-                        auto thisState = new HookDeliveryState( controlData, target );
+                        //auto thisState = new HookDeliveryState( controlData, target );
+                        auto thisState = new HookDeliveryManualState(controlData, target, MechanismTargetData::SOLENOID::NONE );
                         m_stateVector[stateEnum] = thisState;
                     }
                     break;
@@ -133,14 +136,17 @@ void HookDeliveryStateMgr::RunCurrentState()
         {
             if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::HOOK_DELIVERY_UP))
             {
+                cout << "hook up " << endl;
                 SetCurrentState( HOOK_DELIVERY_STATE::UP, false );
             }
-            if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::HOOK_DELIVERY_DOWN))
+            else if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::HOOK_DELIVERY_DOWN))
             {
+                cout << "hook down " << endl;
                 SetCurrentState( HOOK_DELIVERY_STATE::DOWN, false );
             }
             else
             {
+                cout << "hook off " << endl;
                 SetCurrentState( HOOK_DELIVERY_STATE::OFF, false);
             }
         }
@@ -167,6 +173,7 @@ void HookDeliveryStateMgr::SetCurrentState
     {    
         m_currentState = state;
         m_currentStateEnum = stateEnum;
+        cout << "setting current state to " << stateEnum << endl;
         m_currentState->Init();
         if ( run )
         {
