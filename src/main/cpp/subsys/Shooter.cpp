@@ -73,8 +73,10 @@ void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double upperValu
     m_bottomMotor.get()->Set(lowerValue);
 
     auto table = nt::NetworkTableInstance::GetDefault().GetTable("DebugShooterSpeeds");
-	table.get()->PutNumber("Top motor speed:", upperValue);
-    table.get()->PutNumber("Bottom motor speed:", lowerValue);
+	table.get()->PutNumber("Top motor set speed:", upperValue);
+    table.get()->PutNumber("Bottom motor set speed:", lowerValue);
+    table.get()->PutNumber("Top motor real speed (RPS):", m_topMotor.get()->GetRPS());
+    table.get()->PutNumber("Bottom motor real speed (RPS):", m_bottomMotor.get()->GetRPS());
 }
 
 void Shooter::ActivateSolenoid(bool activate)
