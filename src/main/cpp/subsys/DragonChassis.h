@@ -21,6 +21,7 @@
 
 // FRC includes
 #include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <frc2/Timer.h>
 
 
@@ -133,6 +134,7 @@ class DragonChassis : public IChassis
         DragonPigeon*                   m_pigeon;
         frc::Pose2d                     m_pose;
         frc2::Timer                     m_timer;
+        frc::DifferentialDriveKinematics    m_kinematics;
         
 
 };

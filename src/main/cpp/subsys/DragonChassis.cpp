@@ -67,7 +67,8 @@ DragonChassis::DragonChassis
     m_wheelDiameter( wheelDiameter ),
     m_pigeon(PigeonFactory::GetFactory()->GetPigeon()),
     m_pose(),
-    m_timer()
+    m_timer(),
+    m_kinematics(units::length::inch_t(track))
 {
     m_timer.Reset();
     m_timer.Start();
@@ -102,6 +103,16 @@ void DragonChassis::SetOutput
         frc::ChassisSpeeds  chassisSpeeds
 )
 {
+    auto diffDriveSpeeds = m_kinematics.ToWheelSpeeds(chassisSpeeds);
+    units::velocity::feet_per_second_t fpsLeft = diffDriveSpeeds.left;
+    units::velocity::feet_per_second_t fpsRight = diffDriveSpeeds.right;
+    double ipsLeft = fpsLeft.to<double>() * 12.0;
+    double ipsRight = fpsRight.to<double>() * 12.0;
+    cout << "chassis speeds: " << chassisSpeeds.vx.to<double>() << " " <<chassisSpeeds.vy.to<double>() << " " <<chassisSpeeds.omega.to<double>() << " " <<  endl;
+    cout << "chassis left: " << ipsLeft << endl;
+    cout << "chassis right " << ipsRight << endl;
+    SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, ipsLeft, ipsRight);
+    /**
     units::velocity::feet_per_second_t vel {chassisSpeeds.vx};
 
     auto throttle = vel.to<double>() * 12.0;
@@ -110,10 +121,12 @@ void DragonChassis::SetOutput
     auto left = throttle - steer;
     auto right = throttle + steer;
 
+    cout << "chassis speeds: " << left << endl;
     cout << "chassis left: " << left << endl;
     cout << "chassis right " << right << endl;
 
     SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, left, right);
+    **/
 }
 
 

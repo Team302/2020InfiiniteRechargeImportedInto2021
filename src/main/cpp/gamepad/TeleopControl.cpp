@@ -121,10 +121,10 @@ TeleopControl::TeleopControl() : m_axisIDs(),
 		m_controllerIndex[ CLIMBER_WINCH_UP ] = ctrlNo;
 		m_buttonIDs[ CLIMBER_WINCH_UP ] = IDragonGamePad::X_BUTTON;
 
-		m_controllerIndex[ HOOK_DELIVERY_UP] 	= ctrlNo;
-		m_axisIDs[ HOOK_DELIVERY_UP]				= IDragonGamePad::RIGHT_TRIGGER;
+		m_controllerIndex[ HOOK_DELIVERY_UP] 		= ctrlNo;
+		m_buttonIDs[ HOOK_DELIVERY_UP]				= IDragonGamePad::RIGHT_TRIGGER_PRESSED;
 		m_controllerIndex[ HOOK_DELIVERY_DOWN ] 	= ctrlNo;
-		m_axisIDs[ HOOK_DELIVERY_DOWN ]         	= IDragonGamePad::LEFT_TRIGGER;
+		m_buttonIDs[ HOOK_DELIVERY_DOWN ]         	= IDragonGamePad::LEFT_TRIGGER_PRESSED;
 
 		/*m_controllerIndex[ CONTROL_PANEL_RAISE ] = ctrlNo;
 		m_buttonIDs[ CONTROL_PANEL_RAISE] = IDragonGamePad::Y_BUTTON;
