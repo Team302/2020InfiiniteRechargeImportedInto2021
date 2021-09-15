@@ -28,7 +28,7 @@
     <chassis type="TANK"
 			 wheelDiameter="6.0"
              wheelBase="22.75"  
-             track="25.25">
+             track="25.5">
 			 
 		<motor usage="LEFT_DRIVE_MASTER"
 				canId="12"
