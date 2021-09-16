@@ -120,8 +120,6 @@ vector<MechanismTargetData*> StateDataDefn::ParseXML
             break;
     }
 
-    std::cout << filename << endl;
-
     if ( !hasError )
     {
         // load the xml file into memory (parse it)

@@ -16,6 +16,7 @@
 
 
 // C++ Includes
+#include <iostream>
 
 // FRC includes
 
@@ -101,42 +102,17 @@ TeleopControl::TeleopControl() : m_axisIDs(),
 		m_controllerIndex[ ARCADE_DRIVE_STEER ] 		= ctrlNo;
 		m_axisIDs[ ARCADE_DRIVE_STEER ]         		= IDragonGamePad::RIGHT_JOYSTICK_X;
 
-		/**
-		m_controllerIndex[ GTA_DRIVE_FORWARD ] 		    = ctrlNo;
-		m_axisIDs[ GTA_DRIVE_FORWARD ]      		    = IDragonGamePad::RIGHT_TRIGGER;
-		m_controllerIndex[ GTA_DRIVE_BACKWARD ] 		= ctrlNo;
-		m_axisIDs[ GTA_DRIVE_BACKWARD ]         		= IDragonGamePad::LEFT_TRIGGER;
-		m_controllerIndex[ GTA_DRIVE_STEER ] 		    = ctrlNo;
-		m_axisIDs[ GTA_DRIVE_STEER ]         		    = IDragonGamePad::LEFT_JOYSTICK_X;
-		m_controllerIndex[ CURVATURE_DRIVE_QUICK_TURN ]	= ctrlNo;
-		m_buttonIDs[ CURVATURE_DRIVE_QUICK_TURN ]		= IDragonGamePad::RIGHT_BUMPER;
 
-		m_controllerIndex[ SWITCH_DRIVE_MODE ]          = ctrlNo;
-		m_buttonIDs[ SWITCH_DRIVE_MODE ]                = IDragonGamePad::A_BUTTON;
-		**/
-
-		/*m_controllerIndex[ CLIMBER_EXTEND ] = ctrlNo;
-		m_buttonIDs[ CLIMBER_EXTEND ] = IDragonGamePad::A_BUTTON;*/
 
 		m_controllerIndex[ CLIMBER_WINCH_UP ] = ctrlNo;
 		m_buttonIDs[ CLIMBER_WINCH_UP ] = IDragonGamePad::X_BUTTON;
 
-		m_controllerIndex[ HOOK_DELIVERY_UP] 		= ctrlNo;
-		//m_buttonIDs[ HOOK_DELIVERY_UP]				= IDragonGamePad::RIGHT_BUMPER;
-		//m_buttonIDs[ HOOK_DELIVERY_UP]				= IDragonGamePad::RIGHT_TRIGGER_PRESSED;
+		m_controllerIndex[ MANUAL_HOOK_CONTROL_UP] 		= ctrlNo;
 		m_axisIDs[ MANUAL_HOOK_CONTROL_UP ]      		    = IDragonGamePad::RIGHT_TRIGGER;
 
 
 		m_controllerIndex[ HOOK_DELIVERY_DOWN ] 	= ctrlNo;
 		m_buttonIDs[ HOOK_DELIVERY_DOWN ]         	= IDragonGamePad::LEFT_BUMPER;
-		//m_buttonIDs[ HOOK_DELIVERY_DOWN ]         	= IDragonGamePad::LEFT_TRIGGER_PRESSED;
-
-		/*m_controllerIndex[ CONTROL_PANEL_RAISE ] = ctrlNo;
-		m_buttonIDs[ CONTROL_PANEL_RAISE] = IDragonGamePad::Y_BUTTON;
-
-		m_controllerIndex[ CONTROL_PANEL_SPIN_WHEEL] = ctrlNo;
-		m_buttonIDs[ CONTROL_PANEL_SPIN_WHEEL] = IDragonGamePad::B_BUTTON;*/
-
     }
     else
     {
@@ -366,6 +342,7 @@ float TeleopControl::GetAxisValue
     float value = 0.0;
 	int ctlIndex = m_controllerIndex[ function];
 	IDragonGamePad::AXIS_IDENTIFIER axis = m_axisIDs[ function ];
+
     if ( ctlIndex > -1 && axis != IDragonGamePad::AXIS_IDENTIFIER::UNDEFINED_AXIS  )
     {
     	if (m_controllers[ ctlIndex ] != nullptr)
