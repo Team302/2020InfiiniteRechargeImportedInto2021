@@ -42,7 +42,7 @@ class SuperDrive : public IPrimitive
 		void SlowDown();
 		bool ReachedTargetSpeed();
 
-		const float GYRO_CORRECTION_CONSTANT = 6; //2.3
+		const float GYRO_CORRECTION_CONSTANT = 0.1;//6; //2.3
 		const float INCHES_PER_SECOND_SECOND = 120; //120
 		const float MIN_SPEED_SLOWDOWN       = 13;
 
