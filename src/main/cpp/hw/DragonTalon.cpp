@@ -73,6 +73,7 @@ DragonTalon::DragonTalon
 		error = ErrorCode::OKAY;
 	}
 
+	/**
 	m_talon.get()->SetNeutralMode(NeutralMode::Brake);
 
 	error = m_talon.get()->ConfigNeutralDeadband(0.01, 0);
@@ -243,6 +244,7 @@ DragonTalon::DragonTalon
 	{
 		Logger::GetLogger()->LogError(prompt, string("ConfigRemoteFeedbackFilter error"));
 	}
+		*/
 }
 
 double DragonTalon::GetRotations() const

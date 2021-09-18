@@ -29,8 +29,8 @@ MechanismTypes::MECHANISM_TYPE Shooter::GetType() const
 
 void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double value)
 {
-    //auto value2 = 0.75 * value;
-    SetOutput(controlType, value, value);
+    auto value2 = 0.75 * value;
+    SetOutput(controlType, value, value2);
     /**
     switch(controlType)
     {
@@ -54,6 +54,7 @@ void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double value)
 
 void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double upperValue, double lowerValue)
 {
+    /**
     switch(controlType)
     {
         case ControlModes::CONTROL_TYPE::PERCENT_OUTPUT:
@@ -64,19 +65,29 @@ void Shooter::SetOutput(ControlModes::CONTROL_TYPE controlType, double upperValu
             m_targetSpeed1 = upperValue;
             m_targetSpeed2 = lowerValue;
             break;
+        case ControlModes::CONTROL_TYPE::VELOCITY_RPS:
+            m_targetSpeed1 = upperValue;
+            m_targetSpeed2 = lowerValue;
+            break;
         default:
             break;
     }
+    **/
+    
+    m_targetSpeed1 = upperValue;
+    m_targetSpeed2 = lowerValue;
     m_topMotor.get()->SetControlMode(controlType);
     m_bottomMotor.get()->SetControlMode(controlType);
     m_topMotor.get()->Set(upperValue);
     m_bottomMotor.get()->Set(lowerValue);
 
+    /**
     auto table = nt::NetworkTableInstance::GetDefault().GetTable("DebugShooterSpeeds");
 	table.get()->PutNumber("Top motor set speed:", upperValue);
     table.get()->PutNumber("Bottom motor set speed:", lowerValue);
     table.get()->PutNumber("Top motor real speed (RPS):", m_topMotor.get()->GetRPS());
     table.get()->PutNumber("Bottom motor real speed (RPS):", m_bottomMotor.get()->GetRPS());
+    **/
 }
 
 void Shooter::ActivateSolenoid(bool activate)
