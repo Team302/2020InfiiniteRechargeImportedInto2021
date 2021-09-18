@@ -25,7 +25,6 @@
 
 // team 302 includes
 #include <states/chassis/ArcadeDrive.h>
-#include <states/chassis/GTADrive.h>
 #include <states/chassis/TankDrive.h>
 #include <auton/CyclePrimitives.h>
 
@@ -60,7 +59,6 @@ class ChassisStateMgr
     private:
 
       std::shared_ptr<ArcadeDrive>      m_arcade;
-      std::shared_ptr<GTADrive>         m_gta;
       std::shared_ptr<TankDrive>        m_tank;
       std::shared_ptr<IState>           m_currentDrive;
       std::unique_ptr<CyclePrimitives>  m_cyclePrims;
@@ -70,9 +68,6 @@ class ChassisStateMgr
 
       frc::SendableChooser<std::string>   m_driveModeChooser;                    
       const std::string                   m_driveModeArcade = "Arcade";     
-	  const std::string					  m_driveModeArcadeCurve = "Arcade Curvature";
-      const std::string                   m_driveModeGTA = "GTA";       
-      const std::string                   m_driveModeGTACurve = "GTA Curvature";       
       const std::string                   m_driveModeTank = "Tank";       
       std::string                         m_driveModeSelected;       
 

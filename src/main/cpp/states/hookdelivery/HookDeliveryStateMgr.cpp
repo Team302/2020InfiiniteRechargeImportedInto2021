@@ -134,19 +134,16 @@ void HookDeliveryStateMgr::RunCurrentState()
         auto controller = TeleopControl::GetInstance();
         if ( controller != nullptr )
         {
-            if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::HOOK_DELIVERY_UP))
+            if ( abs(controller->GetAxisValue( TeleopControl::FUNCTION_IDENTIFIER::MANUAL_HOOK_CONTROL_UP ) > 0.1))
             {
-                cout << "hook up " << endl;
                 SetCurrentState( HOOK_DELIVERY_STATE::UP, false );
             }
             else if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::HOOK_DELIVERY_DOWN))
             {
-                cout << "hook down " << endl;
                 SetCurrentState( HOOK_DELIVERY_STATE::DOWN, false );
             }
             else
             {
-                cout << "hook off " << endl;
                 SetCurrentState( HOOK_DELIVERY_STATE::OFF, false);
             }
         }
@@ -173,7 +170,6 @@ void HookDeliveryStateMgr::SetCurrentState
     {    
         m_currentState = state;
         m_currentStateEnum = stateEnum;
-        cout << "setting current state to " << stateEnum << endl;
         m_currentState->Init();
         if ( run )
         {

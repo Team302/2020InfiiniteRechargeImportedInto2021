@@ -71,6 +71,7 @@ DragonFalcon::DragonFalcon
 		error = ErrorCode::OKAY;
 	}
 
+	/**
 	m_talon.get()->SetNeutralMode(NeutralMode::Brake);
 
 	error = m_talon.get()->ConfigNeutralDeadband(0.01, 0);
@@ -251,6 +252,7 @@ DragonFalcon::DragonFalcon
 	{
 		Logger::GetLogger()->LogError(prompt, string("ConfigRemoteFeedbackFilter error"));
 	}
+	*/
 }
 
 double DragonFalcon::GetRotations() const
@@ -423,7 +425,6 @@ void DragonFalcon::Set(std::shared_ptr<nt::NetworkTable> nt, double value)
 
 			case ControlModes::CONTROL_TYPE::VELOCITY_RPS:
 				output = (ConversionUtils::RPSToCounts100ms( value, m_countsPerRev ) * m_gearRatio);
-//				cout << "RPS to Counts Per 100 ms: " << value << " " << output << endl;  // should be ~123
 				break;
 
 			default:
