@@ -70,6 +70,8 @@ DragonFalcon::DragonFalcon
 		m_talon.get()->ConfigFactoryDefault();
 		error = ErrorCode::OKAY;
 	}
+  	auto limit = SupplyCurrentLimitConfiguration( true, 25.0, 35.0, 0.0 );
+  	m_talon.get()->ConfigSupplyCurrentLimit( limit, 50 );
 
 	/**
 	m_talon.get()->SetNeutralMode(NeutralMode::Brake);
@@ -110,7 +112,7 @@ DragonFalcon::DragonFalcon
 	}
 
 	SupplyCurrentLimitConfiguration climit;
-	climit.enable = false;
+	climit.enable = true;
 	climit.currentLimit = 1.0;
 	climit.triggerThresholdCurrent = 1.0;
 	climit.triggerThresholdTime = 0.001;
