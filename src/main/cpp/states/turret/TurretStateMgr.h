@@ -24,6 +24,9 @@ class TurretStateMgr {
         MAX_TURRET_STATES
       };
 
+        TurretStateMgr();
+        ~TurretStateMgr() = default;
+
 
         /// @brief  Find or create the state manmanager
         /// @return TurretStateMgr* pointer to the state manager
@@ -50,16 +53,14 @@ class TurretStateMgr {
         
         inline void SetApproxTargetAngle( double angle ) { m_approxTargetAngle = angle; }
 
+        inline IState* GetCurrentStatePointer() const { return m_currentState; };
+
     private:
 
         std::vector<IState*> m_stateVector;
         IState* m_currentState;
         TURRET_STATE m_currentStateEnum;
         double m_approxTargetAngle;
-
-        TurretStateMgr();
-        ~TurretStateMgr() = default;
-
         static TurretStateMgr*	m_instance;
 
 };
