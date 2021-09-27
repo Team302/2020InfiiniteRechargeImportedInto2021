@@ -1,16 +1,7 @@
-<<<<<<< Updated upstream
-<?xml version="1.0"?>
-<!DOCTYPE auton SYSTEM "auton.dtd">
-<auton>
-    <primitive id="DO_NOTHING"
-               time="3.0"
-               ballState="GET_READY_TO_SHOOT"/>
-=======
 <?xml version="1.0"?>
 <!DOCTYPE auton SYSTEM "auton.dtd">
 <auton>
     <primitive id="DO_NOTHING"
                time="3.0"
                turretAngle="270.0"/>
->>>>>>> Stashed changes
 </auton>

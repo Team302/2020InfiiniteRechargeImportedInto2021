@@ -19,7 +19,7 @@
 	                 controlDataIdentifier="closedloop"
 					 value="1.0"/>
 	<mechanismTarget stateIdentifier="TURRETTURN"
-	                 controlDataIdentifier="openloop"
+	                 controlDataIdentifier="closedloop"
 					 value="0.8"/>
 
 

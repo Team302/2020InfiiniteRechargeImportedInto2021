@@ -143,6 +143,7 @@ void TurretStateMgr::RunCurrentState()
         if ( m_currentState != nullptr )
         {
             m_currentState->Run();
+            std::cout << "Current state: " + to_string(m_currentStateEnum) << endl;
         }
     }
 }
@@ -156,6 +157,7 @@ void TurretStateMgr::SetCurrentState
     auto state = m_stateVector[stateEnum];
     if ( state != nullptr && state != m_currentState )
     {
+        std::cout << "Set turret state to: " + to_string(stateEnum) << endl;
         if (stateEnum == TURN_ANGLE)
         {
             auto cdState = dynamic_cast<TurretTurnAngle*>(state);

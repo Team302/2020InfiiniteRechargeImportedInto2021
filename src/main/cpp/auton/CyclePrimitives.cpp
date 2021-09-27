@@ -84,16 +84,23 @@ void CyclePrimitives::Run()
 		auto currState = turretStateManager->GetCurrentStatePointer();
 		if (m_primParams[m_currentPrimSlot]->GetTurretAngle() > 1.0 )
 		{
-			turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, 0.0);
+			turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, 270.0);
 			turretStateManager->RunCurrentState();
+			std::cout << "Running turret" << endl;
 		} else if (m_currentPrimSlot > pastSlot )
-		{
+		{/*
 			TurretTurn* turretTurnState = dynamic_cast<TurretTurn*>(currState);
 				if (turretTurnState != nullptr)
 				{
 					turretTurnState->Done();
-				}
+					std::cout << "Done running turret" << endl;
+				}*/
 		}
+		else
+		{
+			std::cout << "Did not run turret code" << endl;
+		}
+		
 		m_powerCells->Run();
 		if (m_currentPrim->IsDone() )
 		{
