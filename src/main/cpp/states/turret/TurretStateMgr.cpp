@@ -17,6 +17,7 @@
 #include <gamepad/TeleopControl.h>
 
 #include <states/turret/TurretTurnAngle.h>
+#include <states/turret/TurretTurn.h>
 #include <states/turret/ManualAim.h>
 #include <states/turret/LimelightAim.h>
 #include <states/turret/HoldTurretPosition.h>
@@ -53,7 +54,8 @@ TurretStateMgr::TurretStateMgr() : m_stateVector(),
     stateMap["TURRETAUTOAIM"] = TURRET_STATE::LIMELIGHT_AIM;
     stateMap["TURRETMANUALAIM"] = TURRET_STATE::MANUAL_AIM;
     stateMap["TURRETTURNANGLE"] = TURRET_STATE::TURN_ANGLE;
-    m_stateVector.resize(4);
+    stateMap["TURRETTURN"] = TURRET_STATE::TURRET_TURN;
+    m_stateVector.resize(5);
 
     for ( auto td: targetData )
     {
@@ -95,6 +97,13 @@ TurretStateMgr::TurretStateMgr() : m_stateVector(),
                     case TURRET_STATE::TURN_ANGLE:
                     {
                         auto thisState = new TurretTurnAngle(controlData, td->GetTarget(), MechanismTargetData::SOLENOID::NONE);
+                        m_stateVector[stateEnum] = thisState;
+                    }
+                    break;
+
+                    case TURRET_STATE::TURRET_TURN:
+                    {
+                        auto thisState = new TurretTurn(controlData);
                         m_stateVector[stateEnum] = thisState;
                     }
                     break;

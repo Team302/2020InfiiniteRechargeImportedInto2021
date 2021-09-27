@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE auton SYSTEM "auton.dtd">
+<auton>
+    <primitive id="RESET_POSITION"
+               pathname="GrabFive1.wpilib.json"/>
+    <primitive id="DRIVE_PATH"
+               pathname="GrabFive1.wpilib.json"/>
+    <primitive id="DRIVE_PATH"
+               pathname="GrabFive2.wpilib.json"
+               ballState="INTAKE"/>
+    <primitive id="DO_NOTHING"
+               time="0.25"
+               ballState="GET_READY_TO_SHOOT"/>
+    <primitive id="DO_NOTHING"
+               time="6.0"
+               ballState="SHOOT_AUTON"/>
+    <primitive id="DRIVE_PATH"
+               pathname="GrabFive3.wpilib.json"
+               ballState="INTAKE"/>
+    <primitive id="DRIVE_PATH"
+               pathname="GrabFive4.wpilib.json"/>
+    <primitive id="DO_NOTHING"
+               time="6.0"
+               ballState="SHOOT_AUTON"/>
+</auton>

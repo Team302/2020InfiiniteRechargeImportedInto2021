@@ -32,6 +32,10 @@
 #include <auton/PrimitiveParser.h>
 #include <auton/PrimitiveParams.h>
 #include <states/BallManipulator.h>
+#include <states/turret/TurretStateMgr.h>
+#include <states/turret/TurretTurn.h>
+#include <subsys/MechanismFactory.h>
+#include <subsys/IMechanism.h>
 #include <utils/Logger.h>
 #include <auton/primitives/AutoShoot.h>
 
@@ -50,7 +54,8 @@ CyclePrimitives::CyclePrimitives() : m_primParams(),
 									 m_timer( make_unique<Timer>()),
 									 m_maxTime( 0.0 ),
 									 m_powerCells( new AutoShoot() ),
-									 m_isDone( false )
+									 m_isDone( false ),
+									 m_turretStateManager( TurretStateMgr::GetInstance() )
 {
 }
 
@@ -74,6 +79,21 @@ void CyclePrimitives::Run()
 	{
 		Logger::GetLogger()->LogError( string("CyclePrimitive::RunCurrentPrimitive"), string("Primitive Detected!"));
 		m_currentPrim->Run();
+		auto pastSlot = m_currentPrimSlot;
+		TurretStateMgr* turretStateManager = new TurretStateMgr();
+		auto currState = turretStateManager->GetCurrentStatePointer();
+		if (m_primParams[m_currentPrimSlot]->GetTurretAngle() > 1.0 )
+		{
+			turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, 0.0);
+			turretStateManager->RunCurrentState();
+		} else if (m_currentPrimSlot > pastSlot )
+		{
+			TurretTurn* turretTurnState = dynamic_cast<TurretTurn*>(currState);
+				if (turretTurnState != nullptr)
+				{
+					turretTurnState->Done();
+				}
+		}
 		m_powerCells->Run();
 		if (m_currentPrim->IsDone() )
 		{
