@@ -27,6 +27,10 @@ void ManualAim::Init()
 void ManualAim::Run()
 {
     double val = TeleopControl::GetInstance()->GetAxisValue(TeleopControl::FUNCTION_IDENTIFIER::TURRET_MANUAL_AXIS);
+    if (std::abs(val) < 0.04)
+    {
+        val = 0.0;
+    }
     frc::SmartDashboard::PutNumber("Turret Joystick", val);
     m_turret->SetOutput(m_controlData->GetMode(), val * .75); //scaled to a percentage of a 45 degree turn
     //m_turret->SetOutput(ControlModes::POSITION_DEGREES, 0.0);

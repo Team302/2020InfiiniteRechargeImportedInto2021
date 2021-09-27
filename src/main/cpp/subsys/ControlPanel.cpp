@@ -61,11 +61,6 @@ ControlPanel::ControlPanel
     m_colorMatcher->AddColorMatch(kYellowTarget);
 }
 
-//ControlPanel::~ControlPanel)()
-//{
-//    delete m_spinner;
-//    delete m_manipulatorExtender;
-//}
 MechanismTypes::MECHANISM_TYPE ControlPanel::GetType() const 
 {
     return MechanismTypes::MECHANISM_TYPE::CONTROL_TABLE_MANIPULATOR;
@@ -155,14 +150,12 @@ void ControlPanel::SetControlConstants
     ControlData*                                pid                 
 )
 {
-    m_spinner.get()->SetControlConstants( pid );
+    m_spinner.get()->SetControlConstants( 0, pid );
 }
 
 ControlPanelColors::COLOR ControlPanel::GetColorSeen()
 {
     frc::Color detectedColor = m_color->GetColor();
-    uint32_t detectedProximity = m_color->GetProximity();
-    std::string colorString;
     double confidence = 0.0;
     frc::Color matchedColor = m_colorMatcher->MatchClosestColor(detectedColor, confidence);
     if(matchedColor == kGreenTarget && confidence >= 0.94 )

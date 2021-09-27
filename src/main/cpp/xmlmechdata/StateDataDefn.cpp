@@ -34,6 +34,7 @@
 #include <memory>
 #include <string>
 #include <cstring>
+#include <iostream>
 
 // FRC includes
 

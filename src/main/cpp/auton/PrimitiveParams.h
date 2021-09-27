@@ -17,6 +17,7 @@
 #pragma once
 
 // C++ Includes
+#include <string>
 #include <vector>
 
 // FRC includes
@@ -47,7 +48,8 @@ class PrimitiveParams
                 float                                               startDriveSpeed,
                 float                                               endDriveSpeed,
                 BallManipulator::BALL_MANIPULATOR_STATE             ballState,
-                float                                               turretAngle
+                float                                               turretAngle,
+                std::string                                         pathName
         );//Constructor. Takes in all parameters
 
         PrimitiveParams() = delete;
@@ -65,6 +67,7 @@ class PrimitiveParams
         float GetEndDriveSpeed() const;
         BallManipulator::BALL_MANIPULATOR_STATE GetBallState() const;
         float GetTurretAngle() const;
+        std::string GetPathName() const;
 
         //Setters
         void SetDistance(float distance);
@@ -81,6 +84,7 @@ class PrimitiveParams
         float                                               m_endDriveSpeed;
         BallManipulator::BALL_MANIPULATOR_STATE             m_ballState;
         float                                               m_turretAngle;
+        std::string                                         m_pathName;
 };
 
 typedef std::vector<PrimitiveParams*> PrimitiveParamsVector;

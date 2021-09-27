@@ -147,8 +147,6 @@ void ShooterStateMgr::RunCurrentState()
             // todo add all states/conditions here
         }
 
-        Logger::GetLogger()->OnDash(string("Shooter State"), to_string(m_currentStateEnum));
-
         // run the current state
         if ( m_currentState != nullptr )
         {

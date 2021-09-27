@@ -20,9 +20,14 @@
 // C++ Includes
 
 // FRC includes
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
+#include <frc2/Timer.h>
+
 
 // Team 302 includes
 #include <hw/interfaces/IDragonMotorController.h>
+#include <hw/DragonPigeon.h>
 #include <subsys/IChassis.h>
 #include <subsys/IMechanism.h>
 #include <controllers/ControlModes.h>
@@ -67,6 +72,11 @@ class DragonChassis : public IChassis
             double                                   rightValue     
         ) override;
 
+        void SetOutput
+        (
+            frc::ChassisSpeeds chassisSpeeds
+        ) override;
+
 
         /// @brief  Return the current position of the center of the DragonChassis in inches.  
         /// @return double  position in inches of the center of the chassis
@@ -79,6 +89,13 @@ class DragonChassis : public IChassis
         /// @brief  Return the current position of the right side of the DragonChassis in inches.  
         /// @return double  position in inches of the right side of the chassis
         double GetCurrentRightPosition() const override;
+
+        frc::Pose2d GetPose() const override;
+        void ResetPose
+        (
+            const frc::Pose2d&      pose
+        ) override;
+        void UpdatePose() override;
 
 
         /// @brief  Return the current speed of the center of the DragonChassis in inches per second.  
@@ -103,6 +120,8 @@ class DragonChassis : public IChassis
         ) override;
 
         double GetWheelDiameter() const override;
+
+        bool IsMoving() const override;
         
     private:
         IMechanism*                     m_leftSide;
@@ -111,6 +130,13 @@ class DragonChassis : public IChassis
         double                          m_wheelBase;
         double                          m_wheelTrack;
         double                          m_wheelDiameter;
+
+        DragonPigeon*                   m_pigeon;
+        frc::Pose2d                     m_pose;
+        frc2::Timer                     m_timer;
+        frc::DifferentialDriveKinematics    m_kinematics;
+        
+
 };
 
 

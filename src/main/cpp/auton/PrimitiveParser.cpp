@@ -14,7 +14,10 @@
 //====================================================================================================================================================
 
 
+#include <iostream>
 #include <map>
+
+
 #include <auton/PrimitiveParser.h>
 
 #include <pugixml/pugixml.hpp>
@@ -49,6 +52,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
     float                       yloc = 0.0;
     BallManipulator::BALL_MANIPULATOR_STATE ballState = BallManipulator::BALL_MANIPULATOR_STATE::OFF;
     float                       turretAngle = 0.0;
+    std::string                 pathName;
+
     bool hasError = false;
     string fulldirfile = string("/home/lvuser/auton/");
     fulldirfile += fileName;
@@ -62,6 +67,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
     primStringToEnumMap["TURN_ANGLE_ABS"] = TURN_ANGLE_ABS;
     primStringToEnumMap["TURN_ANGLE_REL"] = TURN_ANGLE_REL;
     primStringToEnumMap["AUTO_SHOOT"] = AUTO_SHOOT;
+    primStringToEnumMap["DRIVE_PATH"] = DRIVE_PATH;
+    primStringToEnumMap["RESET_POSITION"] = RESET_POSITION;
 
     map<string, BallManipulator::BALL_MANIPULATOR_STATE> ballStringToEnumMap;
     ballStringToEnumMap["OFF"] = BallManipulator::BALL_MANIPULATOR_STATE::OFF;
@@ -152,6 +159,10 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                         {
                             turretAngle = attr.as_float();
                         }
+                        else if ( strcmp( attr.name(), "pathname") == 0)
+                        {
+                            pathName = attr.value();
+                        }
                         else
                         {
                             Logger::GetLogger()->LogError( string("PrimitiveParser::ParseXML invalid attribute"), attr.name());
@@ -160,6 +171,7 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                     }
                     if ( !hasError )
                     {   
+                        cout << "Primitive Type " << primitiveType << endl;
                         paramVector.emplace_back( new PrimitiveParams( primitiveType,
                                                                        time,
                                                                        distance,
@@ -169,7 +181,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                                                                        startDriveSpeed,
                                                                        endDriveSpeed,
                                                                        ballState,
-                                                                       turretAngle ) );
+                                                                       turretAngle,
+                                                                       pathName ) );
                     }
                     else 
                     {

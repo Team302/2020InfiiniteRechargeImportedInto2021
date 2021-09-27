@@ -43,35 +43,9 @@ void LimelightAim::Init()
 
 void LimelightAim::Run()
 {
-    /*if(!m_start)
-    {
-        m_turret->SetOutput(m_controlData->GetMode(), m_target);
-        m_start = true;
-    }
-    double targetHorizontalOffset = m_limelight->GetTargetHorizontalOffset();
-    double power = -targetHorizontalOffset / 20 *.5;
-    m_turret->SetOutput(m_controlData->GetMode(), power);
-//    if(m_targetPosition - 5 < m_turret->GetCurrentPosition() < m_targetPosition + 5) //arbitrary tolerance for now will change later
-    if( abs( m_targetPosition - m_turret->GetCurrentPosition() ) <  5.0 ) //arbitrary tolerance for now will change later
-    {
-        m_atTarget = true;
-    }
-    //frc::SmartDashboard::PutNumber("Target Position", targetPosition);
-    frc::SmartDashboard::PutNumber("limelight position", targetHorizontalOffset);
-    */
-   //m_turret->SetOutput(m_controlData->GetMode(), 90.0);
    double targetHorizontalOffset = m_limelight->GetTargetHorizontalOffset();
-   frc::SmartDashboard::PutNumber("horizontal offset", targetHorizontalOffset);
    double currentPosition = m_turret->GetCurrentPosition();
-   /*double scaledOffset;
-   if(targetHorizontalOffset < 0)
-   {
-       scaledOffset = targetHorizontalOffset - 2.0 - (targetHorizontalOffset/28.0) * 5.0;
-   }
-   else
-   {
-       scaledOffset = targetHorizontalOffset + 2.0 + (targetHorizontalOffset/28.0) * 5.0;
-   }*/
+   cout << "current " << to_string(currentPosition) << " target " << to_string(targetHorizontalOffset) << endl;
    m_turret->SetOutput(ControlModes::POSITION_DEGREES, currentPosition + targetHorizontalOffset + 2.0);
 }
 

@@ -1,6 +1,6 @@
 
 //====================================================================================================================================================
-// Copyright 2019 Lake Orion Robotics FIRST Team 302
+// Copyright 2020 Lake Orion Robotics FIRST Team 302 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -22,6 +22,7 @@
 
 // FRC includes
 #include <frc/SpeedController.h>
+#include <networktables/NetworkTable.h>
 
 // Team 302 includes
 #include <hw/usages/MotorControllerUsage.h>
@@ -30,6 +31,7 @@
 
 // Third Party Includes
 #include <ctre/phoenix/motorcontrol/RemoteSensorSource.h>
+#include <ctre/phoenix/motorcontrol/StatusFrame.h>
 
 /// @interface IDragonMotorController
 /// @brief The general interface to motor controllers so that the specific mechanisms that use motors,
@@ -37,6 +39,14 @@
 class IDragonMotorController
 {
     public:
+
+        enum MOTOR_PRIORITY
+        {
+            HIGH,
+            MEDIUM,
+            LOW
+        };
+
         // Getters
         /// @brief  Return the number of revolutions the output shaft has spun
         /// @return double number of revolutions
@@ -65,6 +75,7 @@ class IDragonMotorController
         // Setters
         virtual void SetControlMode(ControlModes::CONTROL_TYPE mode) = 0;
         virtual void Set(double value) = 0;
+        virtual void Set(std::shared_ptr<nt::NetworkTable> nt, double value) = 0;
         virtual void SetRotationOffset(double rotations) = 0;
         virtual void SetVoltageRamping(double ramping, double closedLoopRamping = -1) = 0;
         virtual void EnableCurrentLimiting(bool enabled) = 0;
@@ -72,21 +83,40 @@ class IDragonMotorController
         virtual void Invert(bool inverted) = 0;
         virtual void SetSensorInverted(bool inverted) = 0;
 		virtual void SetDiameter( double diameter ) = 0;
+        virtual void SetVoltage(  units::volt_t output ) = 0;
 
 
         /// @brief  Set the control constants (e.g. PIDF values).
-        /// @param [in] ControlData*   pid - the control constants
+        /// @param [in] int             slot - hardware slot to use
+        /// @param [in] ControlData*    pid - the control constants
         /// @return void
-        virtual void SetControlConstants(ControlData* controlInfo) = 0;
+        virtual void SetControlConstants(int slot, ControlData* controlInfo) = 0;
 
         virtual void SetRemoteSensor
         (
             int                                             canID,
             ctre::phoenix::motorcontrol::RemoteSensorSource deviceType
         ) = 0;
+        virtual void UpdateFramePeriods
+        (
+	        ctre::phoenix::motorcontrol::StatusFrameEnhanced	frame,
+            uint8_t			                                    milliseconds
+        ) = 0;
 
-    protected:
+        
+        virtual void SetFramePeriodPriority
+        (
+            MOTOR_PRIORITY              priority
+        ) = 0;
+            
+        virtual double GetCountsPerRev() const = 0;
+        
         IDragonMotorController() = default;
         virtual ~IDragonMotorController() = default;
+        virtual double GetGearRatio() const = 0;
+
+
+    protected:
+
 };
 

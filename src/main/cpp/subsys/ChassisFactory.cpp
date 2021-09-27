@@ -40,8 +40,6 @@ shared_ptr<IChassis> ChassisFactory::CreateChassis
  	const IDragonMotorControllerMap&    motors 		        // <I> - Motor Controllers
 )
 {
-    Logger::GetLogger()->GetLogger()->LogError( string("creating chassis"), to_string(type));
-
     switch ( type )
     {
         case ChassisFactory::CHASSIS_TYPE::TANK_CHASSIS:

@@ -71,7 +71,9 @@ void ArcadeDrive::Init()
     if ( controller != nullptr )
     {
         controller->SetAxisProfile( TeleopControl::FUNCTION_IDENTIFIER::ARCADE_DRIVE_THROTTLE, IDragonGamePad::AXIS_PROFILE::CUBED );
+        controller->SetAxisScaleFactor( TeleopControl::FUNCTION_IDENTIFIER::ARCADE_DRIVE_THROTTLE, 0.75 );
         controller->SetAxisProfile( TeleopControl::FUNCTION_IDENTIFIER::ARCADE_DRIVE_STEER, IDragonGamePad::AXIS_PROFILE::CUBED );
+        controller->SetAxisScaleFactor( TeleopControl::FUNCTION_IDENTIFIER::ARCADE_DRIVE_STEER, 0.5 );
     }
 }
 
@@ -165,62 +167,26 @@ void ArcadeDrive::CurvatureDrive
 	double* right
 )
 {
-	auto isQuickTurn = GetController() != nullptr ? GetController()->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::CURVATURE_DRIVE_QUICK_TURN ) : false;
-
 	double angularPower = steer;
 
-	if (isQuickTurn) 
+
+	angularPower = abs(throttle) * steer - m_quickStopAccumulator;
+
+	if (m_quickStopAccumulator > 1.0) 
 	{
-		if (abs(throttle) < m_quickStopThreshold) 
-		{
-			m_quickStopAccumulator = (1 - m_quickStopAlpha) * m_quickStopAccumulator + m_quickStopAlpha * steer * 2;
-		}
+		m_quickStopAccumulator -= 1.0;
+	} 
+	else if (m_quickStopAccumulator < -1.0) 
+	{
+		m_quickStopAccumulator += 1.0;
 	} 
 	else 
 	{
-		angularPower = abs(throttle) * steer - m_quickStopAccumulator;
-
-		if (m_quickStopAccumulator > 1.0) 
-		{
-			m_quickStopAccumulator -= 1.0;
-		} 
-		else if (m_quickStopAccumulator < -1.0) 
-		{
-			m_quickStopAccumulator += 1.0;
-		} 
-		else 
-		{
-			m_quickStopAccumulator = 0.0;
-		}
+		m_quickStopAccumulator = 0.0;
 	}
 
 	*left = throttle + angularPower;
 	*right = throttle - angularPower;
-
-	// If rotation is overpowered, reduce both outputs to within acceptable range
-	if (isQuickTurn) 
-	{
-		if (*left > 1.0) 
-		{
-			*right -= *left - 1.0;
-			*left = 1.0;
-		} 
-		else if (*right > 1.0) 
-		{
-			*left -= *right - 1.0;
-			*right = 1.0;
-		} 
-		else if (*left < -1.0) 
-		{
-		  *right -= *left + 1.0;
-		  *left = -1.0;
-		} 
-		else if (*right < -1.0) 
-		{
-		  *left -= *right + 1.0;
-		  *right = -1.0;
-		}
-	}
 
     // make sure the values are within -1.0 to 1.0
     auto maxValue = max(abs( *left ), abs( *right ) );

@@ -104,5 +104,5 @@ void HookDelivery::SetControlConstants
     ControlData*    pid
 )
 {
-    m_master.get()->SetControlConstants( pid );
+    m_master.get()->SetControlConstants( 0, pid );
 }

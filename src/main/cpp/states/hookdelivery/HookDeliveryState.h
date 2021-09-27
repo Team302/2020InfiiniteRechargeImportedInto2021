@@ -30,8 +30,7 @@ class HookDeliveryState : public MechanismState
         HookDeliveryState
         (
             ControlData*                    control,
-            double                          target,
-            MechanismTargetData::SOLENOID   solState
+            double                          target
         );
         ~HookDeliveryState() = default;
 };

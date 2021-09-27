@@ -11,11 +11,13 @@
 #include <controllers/ControlModes.h>
 #include <controllers/ControlData.h>
 
-Turret::Turret(std::shared_ptr<IDragonMotorController> motorController): m_targetPosition(0.0),
-m_targetSpeed(0.0)
+Turret::Turret(std::shared_ptr<IDragonMotorController> motorController): m_turretMotor(motorController),
+                                                                         m_targetSpeed(0.0),
+                                                                         m_targetPosition(0.0),
+                                                                         m_initialPosition(GetCurrentPosition())
 {
-    m_turretMotor = motorController;
-    m_initialPosition = GetCurrentPosition();
+    //m_turretMotor = motorController;
+    //m_initialPosition = GetCurrentPosition();
 }
 
 MechanismTypes::MECHANISM_TYPE Turret::GetType() const
@@ -71,5 +73,5 @@ double Turret::GetCurrentSpeed() const
 
 void Turret::SetControlConstants(ControlData* pid)
 {
-    m_turretMotor.get()->SetControlConstants(pid);
+    m_turretMotor.get()->SetControlConstants(0, pid);
 }

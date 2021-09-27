@@ -125,7 +125,6 @@ double DragonLimelight::GetTargetHorizontalOffset() const
     }
     else
     {
-        Logger::GetLogger()->LogError("DragonLimelight::GetTargetVerticalOffset", "Invalid limelight rotation");
         return -1.0;
     }
     
@@ -154,7 +153,6 @@ double DragonLimelight::GetTargetVerticalOffset() const
     }
     else
     {
-        Logger::GetLogger()->LogError("DragonLimelight::GetTargetVerticalOffset", "Invalid limelight rotation");
         return -1.0;
     }
     

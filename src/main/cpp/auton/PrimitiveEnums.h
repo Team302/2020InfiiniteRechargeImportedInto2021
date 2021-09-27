@@ -37,6 +37,8 @@
              TURN_ANGLE_ABS,
              TURN_ANGLE_REL,
              AUTO_SHOOT,
+             DRIVE_PATH,
+             RESET_POSITION,
              MAX_AUTON_PRIMITIVES
          };
 

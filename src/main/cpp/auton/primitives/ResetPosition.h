@@ -1,6 +1,5 @@
-
 //====================================================================================================================================================
-// Copyright 2020 Lake Orion Robotics FIRST Team 302
+// Copyright 2019 Lake Orion Robotics FIRST Team 302
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -14,32 +13,39 @@
 // OR OTHER DEALINGS IN THE SOFTWARE.
 //====================================================================================================================================================
 
-#pragma once 
+#pragma once
 
-// Standard C++ includes
+//C++ Includes
+#include <memory>
 
-// Team 302 include
-#include <states/chassis/ArcadeDrive.h>
+//FRC/WPI Includes
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <frc/trajectory/TrajectoryConfig.h>
+#include <frc/Filesystem.h>
+#include <wpi/SmallString.h>
+#include <wpi/Path.h>
 
-// CTRE includes 
+//Team 302 Includes
+#include <auton/primitives/IPrimitive.h>
 
-class GTADrive : public ArcadeDrive 
+//Forward Declares
+class IChassis;
+class PrimitiveParams;
+
+class ResetPosition : public IPrimitive
 {
     public:
+        ResetPosition();
+
+        virtual ~ResetPosition() = default;
+
+        void Init(PrimitiveParams* params) override;
+
+        void Run() override;
+
+        bool IsDone() override;
     
-        GTADrive() = default;
-        ~GTADrive() = default;
-
-		/// @brief initialize the profiles for the various gamepad inputs
-		/// @return void
-        void Init() override;
-
-    protected:
-		/// @brief get the throttle component from the game controller
-		/// @return double - throttle value between -1.0 and 1.0
-        double GetThrottle() override;
-		
-		/// @brief get the steer component from the game controller
-		/// @return double - steer value between -1.0 and 1.0
-        double GetSteer() override;
+    private:
+        std::shared_ptr<IChassis> m_chassis;
+        frc::Trajectory                m_trajectory;
 };

@@ -40,6 +40,7 @@
 #include <hw/DragonServo.h>
 #include <hw/DragonAnalogInput.h>
 #include <hw/DragonDigitalInput.h>
+#include <subsys/Climber.h>
 #include <subsys/ControlPanel.h>
 #include <subsys/MechanismFactory.h>
 #include <subsys/HookDelivery.h>
@@ -138,9 +139,6 @@ IMechanism*  MechanismFactory::CreateIMechanism
     }
     else
     {
-        string msg = "about to create mechanism";
-        msg += to_string( type );
-        Logger::GetLogger()->LogError( string("MechansimFactory::CreateIMechanism" ), msg );
         // Create the mechanism
         switch ( type )
         {
@@ -225,13 +223,14 @@ IMechanism*  MechanismFactory::CreateIMechanism
 			
 			case MechanismTypes::MECHANISM_TYPE::CLIMBER:
 			{
+				auto wenchMotor = GetMotorController ( motorControllers, MotorControllerUsage::MOTOR_CONTROLLER_USAGE::CLIMBER );
+				if ( wenchMotor.get() != nullptr )
+				{
+					auto wench = new Climber(wenchMotor);
+					subsys = dynamic_cast<IMechanism*>(wench);
+				}
 			}
 			break;		
-			
-			case MechanismTypes::MECHANISM_TYPE::CRAWLER:
-			{
-			}
-			break;
 			
 			case MechanismTypes::MECHANISM_TYPE::TURRET:
 			{

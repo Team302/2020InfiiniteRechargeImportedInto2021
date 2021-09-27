@@ -17,12 +17,23 @@
 
 // C++ Includes
 #include <memory>
+#include <iostream>
 
 // FRC includes
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/ChassisSpeeds.h>
+#include <frc/kinematics/MecanumDriveWheelSpeeds.h>
+#include <frc2/Timer.h>
+
+#include <units/angle.h>
+#include <units/length.h>
+#include <units/velocity.h>
 
 // Team 302 includes
 #include <subsys/DragonChassis.h>
 #include <hw/interfaces/IDragonMotorController.h>
+#include <hw/DragonPigeon.h>
+#include <hw/factories/PigeonFactory.h>
 #include <subsys/IChassis.h>
 #include <subsys/IMechanism.h>
 #include <controllers/ControlModes.h>
@@ -53,8 +64,14 @@ DragonChassis::DragonChassis
     m_rightSide( new DriveTrainSide( rightMaster, rightFollower, wheelDiameter ) ),
     m_wheelBase( wheelBase ),
     m_wheelTrack( track ),
-    m_wheelDiameter( wheelDiameter )
+    m_wheelDiameter( wheelDiameter ),
+    m_pigeon(PigeonFactory::GetFactory()->GetPigeon()),
+    m_pose(),
+    m_timer(),
+    m_kinematics(units::length::inch_t(track))
 {
+    m_timer.Reset();
+    m_timer.Start();
 }
 
 /// @brief clean up memory when this object gets deleted
@@ -67,7 +84,7 @@ DragonChassis::~DragonChassis()
 
 /// @brief      Run chassis 
 /// @param [in] ControlModes::CONTROL_TYPE   controlType:  How are the item(s) being controlled
-/// @param [in] double                                     leftVvalue:   Left side target (units are based on the controlType)
+/// @param [in] double                                     leftValue:   Left side target (units are based on the controlType)
 /// @param [in] double                                     rightValue:   Right side target (units are based on the controlType)
 /// @return     void
 void DragonChassis::SetOutput
@@ -77,8 +94,39 @@ void DragonChassis::SetOutput
     double                                   rightValue     
 )
 {
-    m_leftSide->SetOutput( controlType, leftValue );
+    m_leftSide->SetOutput( controlType, leftValue * 0.99 ); //0.99 accounts for shooter side being slightly faster than right side
     m_rightSide->SetOutput( controlType, rightValue );
+}
+
+void DragonChassis::SetOutput
+(
+        frc::ChassisSpeeds  chassisSpeeds
+)
+{
+    auto diffDriveSpeeds = m_kinematics.ToWheelSpeeds(chassisSpeeds);
+    units::velocity::feet_per_second_t fpsLeft = diffDriveSpeeds.left;
+    units::velocity::feet_per_second_t fpsRight = diffDriveSpeeds.right;
+    double ipsLeft = fpsLeft.to<double>() * 12.0;
+    double ipsRight = fpsRight.to<double>() * 12.0;
+    cout << "chassis speeds: " << chassisSpeeds.vx.to<double>() << " " <<chassisSpeeds.vy.to<double>() << " " <<chassisSpeeds.omega.to<double>() << " " <<  endl;
+    cout << "chassis left: " << ipsLeft << endl;
+    cout << "chassis right " << ipsRight << endl;
+    SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, ipsLeft, ipsRight);
+    /**
+    units::velocity::feet_per_second_t vel {chassisSpeeds.vx};
+
+    auto throttle = vel.to<double>() * 12.0;
+    auto steer = (m_wheelTrack / 2.0) * chassisSpeeds.omega.to<double>();
+
+    auto left = throttle - steer;
+    auto right = throttle + steer;
+
+    cout << "chassis speeds: " << left << endl;
+    cout << "chassis left: " << left << endl;
+    cout << "chassis right " << right << endl;
+
+    SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, left, right);
+    **/
 }
 
 
@@ -101,6 +149,54 @@ double DragonChassis::GetCurrentLeftPosition() const
 double DragonChassis::GetCurrentRightPosition() const
 {
     return m_rightSide->GetCurrentPosition();
+}
+
+frc::Pose2d DragonChassis::GetPose() const
+{
+    return m_pose;
+}
+
+void DragonChassis::ResetPose
+(
+    const frc::Pose2d&      pose
+)
+{
+    auto trans = pose - m_pose;
+    m_pose += trans;
+}
+
+void DragonChassis::UpdatePose() 
+{
+
+	if ( m_pigeon != nullptr )
+	{
+
+        auto startX = m_pose.X();
+        auto startY = m_pose.Y();
+        
+        units::degree_t yaw{m_pigeon->GetYaw()};
+        Rotation2d rot2d {yaw};
+        units::angle::radian_t rads = yaw;
+
+        auto deltaT = m_timer.Get();
+        m_timer.Reset();    
+
+        double cosAngle = cos(rads.to<double>());
+        double sinAngle = sin(rads.to<double>());
+
+        units::velocity::feet_per_second_t speed = units::velocity::feet_per_second_t(GetCurrentSpeed()/12.0);
+        units::length::meter_t currentX = startX + (speed * cosAngle) * deltaT;
+        units::length::meter_t currentY = startY + (speed * sinAngle) * deltaT;
+
+        Pose2d currentPose {currentX, currentY, rot2d};
+        ResetPose(currentPose);
+    }
+}
+
+
+bool DragonChassis::IsMoving() const
+{
+    return (abs(GetCurrentSpeed() > 0.0001));
 }
 
 

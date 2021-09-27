@@ -73,7 +73,6 @@ void ControlPanelColorTurn::Init()
         }
         else if (targetColor == ControlPanelColors::COLOR::UNKNOWN)
         {
-            Logger::GetLogger()->LogError( string("ControlPanelColorTurn::Init"), string("No return from FMS") );
             rescan = false;
         }
     }
@@ -101,7 +100,6 @@ void ControlPanelColorTurn::Init()
         }
         else if (targetColor == ControlPanelColors::COLOR::UNKNOWN)
         {
-            Logger::GetLogger()->LogError( string("ControlPanelColorTurn::Init"), string("No return from FMS") );
             rescan = false;
         }
     }
@@ -129,7 +127,6 @@ void ControlPanelColorTurn::Init()
         }
         else if (targetColor == ControlPanelColors::COLOR::UNKNOWN)
         {
-            Logger::GetLogger()->LogError( string("ControlPanelColorTurn::Init"), string("No return from FMS") );
             rescan = false;
         }
     }
@@ -157,7 +154,6 @@ void ControlPanelColorTurn::Init()
         }
         else if (targetColor == ControlPanelColors::COLOR::UNKNOWN)
         {
-            Logger::GetLogger()->LogError( string("ControlPanelColorTurn::Init"), string("No return from FMS") );
             rescan = false;
         }
     }

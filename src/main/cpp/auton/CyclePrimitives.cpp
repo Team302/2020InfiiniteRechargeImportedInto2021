@@ -17,6 +17,7 @@
 // C++ Includes
 #include <string>
 #include <memory>
+#include <iostream>
 
 // FRC includes
 #include <frc/Timer.h>
@@ -57,7 +58,10 @@ void CyclePrimitives::Init()
 {
 	m_currentPrimSlot = 0; //Reset current prim
 	m_primParams.clear();
+
+	cout << "Selected Auton File " << m_autonSelector->GetSelectedAutoFile();
 	m_primParams = PrimitiveParser::ParseXML( m_autonSelector->GetSelectedAutoFile() );
+	cout << "number of primitives " << m_primParams.size() << endl;
 	if (!m_primParams.empty())
 	{
 		GetNextPrim();
@@ -123,8 +127,8 @@ void CyclePrimitives::RunDoNothing()
 		                                   0.0,                 // start drive speed
 		                                   0.0,					// end drive speed
 										   state,
-										   0.0                  
-										   );             
+										   0.0,                  
+										  std::string() );             
 		m_doNothing = m_primFactory->GetIPrimitive(params);
 		m_doNothing->Init(params);
 		m_powerCells->Init(params);

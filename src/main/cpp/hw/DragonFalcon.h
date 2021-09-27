@@ -1,6 +1,6 @@
 
 //====================================================================================================================================================
-// Copyright 2019 Lake Orion Robotics FIRST Team 302
+// Copyright 2020 Lake Orion Robotics FIRST Team 302 
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -28,7 +28,7 @@
 
 // Team 302 includes
 #include <hw/DragonFalcon.h>
-#include <hw/DragonPDP.h>
+//#include <hw/DragonPDP.h>
 #include <hw/usages/MotorControllerUsage.h>
 #include <hw/interfaces/IDragonMotorController.h>
 #include <utils/Logger.h>
@@ -68,6 +68,7 @@ class DragonFalcon : public IDragonMotorController
         // Setters (override)
         void SetControlMode(ControlModes::CONTROL_TYPE mode) override; //:D
         void Set(double value) override;
+        void Set(std::shared_ptr<nt::NetworkTable> nt, double value) override;
         void SetRotationOffset(double rotations) override;
         void SetVoltageRamping(double ramping, double rampingClosedLoop = -1) override; // seconds 0 to full, set to 0 to disable
         void EnableCurrentLimiting(bool enabled) override; 
@@ -76,9 +77,10 @@ class DragonFalcon : public IDragonMotorController
         void SetSensorInverted(bool inverted) override;
 
         /// @brief  Set the control constants (e.g. PIDF values).
-        /// @param [in] ControlData*   pid - the control constants
+        /// @param [in] int             slot - hardware slot to use
+        /// @param [in] ControlData*    pid - the control constants
         /// @return void
-        void SetControlConstants(ControlData* controlInfo) override;
+        void SetControlConstants(int slot, ControlData* controlInfo) override;
 
         // Method:		SelectClosedLoopProfile
         // Description:	Selects which profile slot to use for closed-loop control
@@ -110,7 +112,7 @@ class DragonFalcon : public IDragonMotorController
         (
             bool normallyOpen
         );
-        void SetAsSlave(int masterCANID); 
+        void SetAsFollowerMotor(int masterCANID); 
 
         void SetRemoteSensor
         (
@@ -119,6 +121,21 @@ class DragonFalcon : public IDragonMotorController
         ) override;
 
         void SetDiameter( double diameter ) override;
+
+        void SetVoltage(units::volt_t output) override;
+
+        double GetCountsPerRev() const override {return m_countsPerRev;}
+        void UpdateFramePeriods
+        (
+	        ctre::phoenix::motorcontrol::StatusFrameEnhanced	frame,
+            uint8_t			                                    milliseconds
+        ) override;
+        void SetFramePeriodPriority
+        (
+            MOTOR_PRIORITY              priority
+        ) override;
+
+        double GetGearRatio() const override { return m_gearRatio;}
 
     private:
         std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_TalonFX>  m_talon;

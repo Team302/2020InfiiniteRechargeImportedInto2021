@@ -14,7 +14,6 @@
 <!ELEMENT function EMPTY >
 <!ATTLIST  function  name            ( TANKDRIVELEFTCONTROL | TANKDRIVERIGHTCONTROL |
                               ARCADEDRIVETHROTTLE | ARCADEDRIVESTEER |
-                              GTADRIVEFORWARD | GTADRIVEBACKWARD | GTADRIVESTEER |
                               SWITCHDRIVEMODE | CURVATUREDRIVEQUICKTURN |
                               CLIMBEREXTEND | CLIMBERLIFT | CLIMBERCRAWL | 
                               IMPELLERSPIN | IMPELLERSTOP | IMPELLERAGITATE | 

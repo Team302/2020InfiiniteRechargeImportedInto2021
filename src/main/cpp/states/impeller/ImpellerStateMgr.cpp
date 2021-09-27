@@ -80,16 +80,12 @@ ImpellerStateMgr::ImpellerStateMgr() :
                 auto controlData = td->GetController();
                 auto target = td->GetTarget();
                 auto solState = td->GetSolenoidState();
-                auto fbControlData = td->GetFailoverController(); // todo pass through to the states
-                auto fbTarget = td->GetFailoverTarget();  // todo pass through to the states
-
                 switch ( stateEnum )
                 {
                     case IMPELLER_STATE::HOLD:
                     {   
                         auto thisState = new ImpellerState(controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller Hold State added to Map");
                     }
                     break;
 
@@ -97,7 +93,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                     {   
                         auto thisState = new ImpellerState(controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller To Shooter State added to Map");
                     }
                     break;
 
@@ -108,7 +103,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                         m_currentState = thisState;
                         m_currentStateEnum = stateEnum;
                         m_currentState->Init();
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller Off State added to Map");
                     }
                     break;
 
@@ -116,7 +110,6 @@ ImpellerStateMgr::ImpellerStateMgr() :
                     {   
                         auto thisState = new ImpellerState(controlData, target, solState );
                         m_stateVector[stateEnum] = thisState;
-                        Logger::GetLogger()->LogError("ImpellerStateMgr::ImpellerStateMgr", "Impeller Agitate State added to Map");
                     }
                     break;
 
@@ -145,7 +138,6 @@ void ImpellerStateMgr::RunCurrentState()
 {
     if ( MechanismFactory::GetMechanismFactory()->GetIMechanism(MechanismTypes::MECHANISM_TYPE::IMPELLER) != nullptr )
     {
-        auto changingStates = false;
         // process teleop/manual interrupts
         auto controller = TeleopControl::GetInstance();
         if ( controller != nullptr )
@@ -153,104 +145,30 @@ void ImpellerStateMgr::RunCurrentState()
             if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::IMPELLER_TO_SHOOTER ) && m_currentStateEnum != IMPELLER_STATE::TO_SHOOTER)
             {
                 SetCurrentState( IMPELLER_STATE::TO_SHOOTER, false );
-                changingStates = true;
                 m_numReverseLoops = 0;
             }
             if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::IMPELLER_OFF ) && m_currentStateEnum != IMPELLER_STATE::OFF)
             {
                 SetCurrentState( IMPELLER_STATE::OFF, false );
-                changingStates = true;
                 m_numReverseLoops = 0;
             }
             if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::IMPELLER_AGITATE  ) && m_currentStateEnum != IMPELLER_STATE::AGITATE)
             {
                 SetCurrentState( IMPELLER_STATE::AGITATE, false );
-                changingStates = true;
                 m_numReverseLoops = 0;
             }
             
             if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::IMPELLER_HOLD ) && m_currentStateEnum != IMPELLER_STATE::HOLD )
             {
                 SetCurrentState( IMPELLER_STATE::HOLD, false );
-                changingStates = true;
                 m_numReverseLoops = 0;
             }
-            
-            /*else if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::SHOOTER_AUTO_SHOOT ) )
-            {
-                SetCurrentState( IMPELLER_STATE::TO_SHOOTER, false );
-            }
-            else if ( controller->IsButtonPressed( TeleopControl::FUNCTION_IDENTIFIER::SHOOTER_MANUAL_SHOOT ) )
-            {
-                SetCurrentState( IMPELLER_STATE::TO_SHOOTER, false );
-            }
-            */
         }
-
-
-        
-        Logger::GetLogger()->OnDash(string("Impeller State"), to_string(m_currentStateEnum));
 
         // run the current state
         if ( m_currentState != nullptr )
         {
             m_currentState->Run();
-            Logger::GetLogger()->LogError("Logger::SetCurrentState", "Running Current State");
-
-            /*if ( !changingStates && ( m_currentStateEnum == IMPELLER_STATE::TO_SHOOTER || 
-                                    m_currentStateEnum == IMPELLER_STATE::HOLD ) )
-            {
-                auto speed = m_impeller->GetCurrentSpeed();
-                if ( abs(speed) < 0.0002 )
-                { 
-                    m_consecZero++;
-                    if ( m_consecZero > 5 )
-                    {
-                        m_reverse = true;
-                        switch ( m_currentStateEnum )
-                        {
-                            case IMPELLER_STATE::TO_SHOOTER:
-                                SetCurrentState( IMPELLER_STATE::HOLD, false );
-                                break;
-                            
-                            case IMPELLER_STATE::HOLD:
-                                SetCurrentState( IMPELLER_STATE::TO_SHOOTER, false );
-                                break;
-                            
-                            default:
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    m_consecZero = 0;
-                }
-
-                if ( m_reverse )
-                {
-                    m_numReverseLoops++;
-                    if ( m_numReverseLoops > 20 )
-                    {
-                        m_reverse = true;
-                        m_numReverseLoops = 0;
-                        switch ( m_currentStateEnum )
-                        {
-                            case IMPELLER_STATE::TO_SHOOTER:
-                                SetCurrentState( IMPELLER_STATE::HOLD, false );
-                                break;
-                            
-                            case IMPELLER_STATE::HOLD:
-                                SetCurrentState( IMPELLER_STATE::TO_SHOOTER, false );
-                                break;
-                            
-                            default:
-                                break;
-                        }
-
-                    }
-                }
-            }*/
         }
     }
 
