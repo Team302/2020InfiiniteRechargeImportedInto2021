@@ -194,8 +194,8 @@ void SuperDrive::Run()
 	//m_rightSpeed = m_currentSpeed;
 	//m_leftSpeed = m_currentSpeed;
 
-	m_leftSpeed += m_currentHeading * GYRO_CORRECTION_CONSTANT;
-	m_rightSpeed -= m_currentHeading * GYRO_CORRECTION_CONSTANT;
+	//m_leftSpeed += m_currentHeading * GYRO_CORRECTION_CONSTANT;
+	//m_rightSpeed -= m_currentHeading * GYRO_CORRECTION_CONSTANT;
 
 	m_chassis->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, m_leftSpeed, m_rightSpeed );
 

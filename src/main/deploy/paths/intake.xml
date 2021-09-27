@@ -3,13 +3,17 @@
 <statedata>
 	<controlData identifier="openloop" 
 	             mode="PERCENT_OUTPUT"/>
-	<mechanismTarget stateIdentifier="HOOKDELIVERYOFF"
+	<mechanismTarget stateIdentifier="INTAKEOFF"
 	                 controlDataIdentifier="openloop"
-					 value="0.0"/>
-	<mechanismTarget stateIdentifier="HOOKDELIVERYUP"
+					 value="0.0"
+					 solenoid="ON"/>
+	<mechanismTarget stateIdentifier="INTAKEON"
 	                 controlDataIdentifier="openloop"
-					 value="0.15"/>
-	<mechanismTarget stateIdentifier="HOOKDELIVERYDOWN"
+					 value=".75"
+					 solenoid="OFF"/>
+	<mechanismTarget stateIdentifier="INTAKEHUMANPLAYER"
 	                 controlDataIdentifier="openloop"
-					 value="-0.6"/>
+					 value="-0.75"
+					 solenoid="OFF"/>
+
 </statedata>

@@ -57,7 +57,7 @@ void HookDeliveryManualState::Run()
         {
             up = 0.0;
         }
-        up *= 0.5;
+        //up *= 0.5;
         //auto down = ctl->GetAxisValue( TeleopControl::FUNCTION_IDENTIFIER::MANUAL_HOOK_CONTROL_DOWN );
         //mech->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, (up-down) );
         mech->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, up );
