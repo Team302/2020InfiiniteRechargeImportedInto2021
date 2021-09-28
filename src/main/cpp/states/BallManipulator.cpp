@@ -164,7 +164,7 @@ void BallManipulator::SetCurrentState
         case BALL_MANIPULATOR_STATE::GET_READY_TO_SHOOT:
             m_impeller->SetCurrentState( ImpellerStateMgr::IMPELLER_STATE::OFF, false );
             m_transfer->SetCurrentState( BallTransferStateMgr::BALL_TRANSFER_STATE::OFF, false );
-            m_turret->SetCurrentState( TurretStateMgr::TURRET_STATE::LIMELIGHT_AIM, false, 0.0 );
+            m_turret->SetCurrentState( TurretStateMgr::TURRET_STATE::LIMELIGHT_AIM, true, 0.0 );
             m_shooter->SetCurrentState( ShooterStateMgr::SHOOTER_STATE::SHOOT, false );
             m_hood->SetCurrentState( ShooterHoodStateMgr::SHOOTER_HOOD_STATE::HOLD_POSITION, false );  // todo auto aim is needed
             break;

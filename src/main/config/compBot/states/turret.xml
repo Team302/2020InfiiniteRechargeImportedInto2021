@@ -20,7 +20,7 @@
 					 value="1.0"/>
 	<mechanismTarget stateIdentifier="TURRETTURN"
 	                 controlDataIdentifier="closedloop"
-					 value="0.8"/>
+					 value="0.4"/>
 
 
 </statedata>

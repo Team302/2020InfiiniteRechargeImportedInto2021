@@ -80,7 +80,7 @@ void CyclePrimitives::Run()
 		Logger::GetLogger()->LogError( string("CyclePrimitive::RunCurrentPrimitive"), string("Primitive Detected!"));
 		m_currentPrim->Run();
 		auto pastSlot = m_currentPrimSlot;
-		TurretStateMgr* turretStateManager = new TurretStateMgr();
+		TurretStateMgr* turretStateManager = TurretStateMgr::GetInstance();
 		auto currState = turretStateManager->GetCurrentStatePointer();
 		if (m_primParams[m_currentPrimSlot]->GetTurretAngle() > 1.0 )
 		{
@@ -88,13 +88,13 @@ void CyclePrimitives::Run()
 			turretStateManager->RunCurrentState();
 			std::cout << "Running turret" << endl;
 		} else if (m_currentPrimSlot > pastSlot )
-		{/*
+		{
 			TurretTurn* turretTurnState = dynamic_cast<TurretTurn*>(currState);
 				if (turretTurnState != nullptr)
 				{
 					turretTurnState->Done();
 					std::cout << "Done running turret" << endl;
-				}*/
+				}
 		}
 		else
 		{

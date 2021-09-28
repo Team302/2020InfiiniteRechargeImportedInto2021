@@ -164,7 +164,6 @@ void TurretStateMgr::SetCurrentState
             auto cd = cdState->GetControlData();
             m_stateVector[stateEnum] = new TurretTurnAngle(cd,turretAngle, MechanismTargetData::SOLENOID::NONE);
             state = m_stateVector[stateEnum];
-            Wait(3.0);
         }
         m_currentState = state;
         m_currentStateEnum = stateEnum;
