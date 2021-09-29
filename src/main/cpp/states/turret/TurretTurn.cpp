@@ -23,7 +23,9 @@
 
 using namespace std;
 
-TurretTurn::TurretTurn(ControlData* controlData): m_controlData(controlData),
+TurretTurn::TurretTurn(ControlData* controlData, double target): m_controlData(controlData),
+                                                                 m_targetSpeed(target),
+                                                                 m_isDone(false),
     m_turret( MechanismFactory::GetMechanismFactory()->GetIMechanism( MechanismTypes::TURRET) )
 {
 }
@@ -33,13 +35,29 @@ void TurretTurn::Init()
     m_turret->SetControlConstants(m_controlData);
 }
 
+void TurretTurn::SetTarget(double targetAngle)
+{
+    m_targetAngle = targetAngle;
+}
+
 void TurretTurn::Run()
 {
-   m_turret->SetOutput(ControlModes::PERCENT_OUTPUT, 0.8);
+    if (m_isDone == false)
+    {
+        m_turret->SetOutput(ControlModes::PERCENT_OUTPUT, m_targetSpeed);
+        std::cout << "Turret angle: " + to_string(m_turret->GetCurrentPosition()) << endl;
+        if (m_turret->GetCurrentPosition() == (m_targetAngle + 3) || m_turret->GetCurrentPosition() == (m_targetAngle - 3))
+        {
+            Done();
+             m_isDone = true;
+        }
+    }
 }
 
 bool TurretTurn::AtTarget() const
-{ return false;}
+{ 
+    return m_isDone;
+}
 
 void TurretTurn::Done()
 {

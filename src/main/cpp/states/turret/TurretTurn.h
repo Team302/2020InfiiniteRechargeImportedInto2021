@@ -26,13 +26,18 @@ class TurretTurn : public IState
     public:
         TurretTurn
         (
-            ControlData* controlData
+            ControlData* controlData,
+            double target
         );
         void Init() override;
         void Run() override;
         bool AtTarget() const override;
         void Done();
+        void SetTarget(double targetAngle);
     private:
         ControlData* m_controlData;
         IMechanism* m_turret;
+        double m_targetAngle;
+        double m_targetSpeed;
+        bool   m_isDone;
 };
