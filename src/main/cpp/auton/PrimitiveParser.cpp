@@ -99,6 +99,7 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
 
                     for (xml_attribute attr = primitiveNode.first_attribute(); attr; attr = attr.next_attribute())
                     {
+                        cout << "Attribute name: " <<  attr.name() << endl;
                         if ( strcmp( attr.name(), "id" ) == 0 )
                         {
                             auto paramStringToEnumItr = primStringToEnumMap.find( attr.value() );
@@ -158,6 +159,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                         else if ( strcmp( attr.name(), "turretAngle") == 0 )
                         {
                             turretAngle = attr.as_float();
+                            cout << "Found turret angle attribute" << endl;
+                            cout << "Turret angle is " + to_string(turretAngle) << endl;
                         }
                         else if ( strcmp( attr.name(), "pathname") == 0)
                         {
