@@ -39,5 +39,6 @@ class TurretTurn : public IState
         IMechanism* m_turret;
         double m_targetAngle;
         double m_targetSpeed;
+        double m_currentAngle;
         bool   m_isDone;
 };

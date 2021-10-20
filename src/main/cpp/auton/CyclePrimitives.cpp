@@ -81,7 +81,7 @@ void CyclePrimitives::Run()
 		m_currentPrim->Run();
 		TurretStateMgr* turretStateManager = TurretStateMgr::GetInstance();
 		auto currState = turretStateManager->GetCurrentStatePointer();
-		std::cout << to_string(m_primParams[m_currentPrimSlot]->GetTurretAngle()) << endl;
+		std::cout << "Turret angle in cycle primitives" << to_string(m_primParams[m_currentPrimSlot]->GetTurretAngle()) << endl;
 		if (m_primParams[m_currentPrimSlot]->GetTurretAngle() > 1.0 )
 		{
 			turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, m_primParams[m_currentPrimSlot]->GetTurretAngle());

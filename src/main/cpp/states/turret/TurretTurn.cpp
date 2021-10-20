@@ -33,11 +33,12 @@ TurretTurn::TurretTurn(ControlData* controlData, double target): m_controlData(c
 void TurretTurn::Init()
 {
     m_turret->SetControlConstants(m_controlData);
+    m_currentAngle = m_turret->GetCurrentPosition();
 }
 
 void TurretTurn::SetTarget(double targetAngle)
 {
-    m_targetAngle = targetAngle;
+    m_targetAngle = m_currentAngle + targetAngle;
     m_isDone = false;
 }
 
