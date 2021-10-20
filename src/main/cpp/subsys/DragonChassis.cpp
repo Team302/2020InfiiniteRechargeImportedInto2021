@@ -94,8 +94,10 @@ void DragonChassis::SetOutput
     double                                   rightValue     
 )
 {
-    m_leftSide->SetOutput( controlType, leftValue * 0.99 ); //0.99 accounts for shooter side being slightly faster than right side
-    m_rightSide->SetOutput( controlType, rightValue );
+    auto left = 0.75*leftValue;
+    auto right = 0.75*rightValue;
+    m_leftSide->SetOutput( controlType, left * 0.99 ); //0.99 accounts for shooter side being slightly faster than right side
+    m_rightSide->SetOutput( controlType, right );
 }
 
 void DragonChassis::SetOutput

@@ -70,7 +70,7 @@ DragonFalcon::DragonFalcon
 		m_talon.get()->ConfigFactoryDefault();
 		error = ErrorCode::OKAY;
 	}
-  	auto limit = SupplyCurrentLimitConfiguration( true, 25.0, 35.0, 0.0 );
+  	auto limit = SupplyCurrentLimitConfiguration( true, 20.0, 30.0, 0.0 );
   	m_talon.get()->ConfigSupplyCurrentLimit( limit, 50 );
 
 	/**
