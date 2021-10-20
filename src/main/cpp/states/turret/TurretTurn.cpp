@@ -52,7 +52,8 @@ void TurretTurn::Run()
         if (m_turret->GetCurrentPosition() > m_targetAngle)
         {
             Done();
-             m_isDone = true;
+            m_isDone = true;
+            //cout << "TurretTurn is done, setting turret to 0%" << endl;
         }
     //}
 }
