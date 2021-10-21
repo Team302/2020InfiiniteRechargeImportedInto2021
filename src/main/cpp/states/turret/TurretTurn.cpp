@@ -38,7 +38,7 @@ void TurretTurn::Init()
 
 void TurretTurn::SetTarget(double targetAngle)
 {
-    m_targetAngle = m_currentAngle + targetAngle;
+    m_targetAngle = targetAngle;
     m_isDone = false;
 }
 
@@ -47,7 +47,9 @@ void TurretTurn::Run()
     //if (m_isDone == false)
     //{
         m_turret->SetOutput(ControlModes::PERCENT_OUTPUT, m_targetSpeed);
+        std::cout << "Target speed: " + to_string(m_targetSpeed) << endl;
         std::cout << "Turret angle: " + to_string(m_turret->GetCurrentPosition()) << endl;
+        std::cout << "Target angle: " + to_string(m_targetAngle) << endl;
         //if ( abs(m_targetAngle - m_turret->GetCurrentPosition()) < 5)
         if (m_turret->GetCurrentPosition() > m_targetAngle)
         {
