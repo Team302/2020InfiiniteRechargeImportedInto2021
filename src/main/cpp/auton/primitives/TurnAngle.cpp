@@ -48,7 +48,9 @@ TurnAngle::TurnAngle() : m_chassis( ChassisFactory::GetChassisFactory()->GetICha
 						 m_maxTime(0.0),
 						 m_leftPos(0.0),
 						 m_rightPos(0.0),
-						 m_isDone(false)
+						 m_isDone(false),
+						 m_pigeon(PigeonFactory::GetFactory()->GetPigeon()),
+						 m_heading(0.0)
 {
 }
 
@@ -98,14 +100,13 @@ void TurnAngle::Init(PrimitiveParams* params)
 
 void TurnAngle::Run() //best method ever. Does nothing, and should do nothing... NOT ANYMORE, BUDDY!
 {
-	auto heading = 0.0;
-	auto pigeon = PigeonFactory::GetFactory()->GetPigeon();
-	if ( pigeon != nullptr )
+	if ( m_pigeon != nullptr )
 	{
-		heading = pigeon->GetYaw();
+		m_heading = m_pigeon->GetYaw();
+		cout << "RobotTurnAngle Heading:" + to_string(m_heading) << endl;
 	}
 
-	float deltaAngle = m_targetAngle - heading;
+	float deltaAngle = m_targetAngle - m_heading;
 
 	bool sign = deltaAngle > 0;
 	double leftSpeed;
@@ -115,11 +116,15 @@ void TurnAngle::Run() //best method ever. Does nothing, and should do nothing...
 	{
 		leftSpeed = .2 * deltaAngle / m_targetAngle + .03;
 		rightSpeed = -leftSpeed;
+		cout << "TurnAngle LeftSpeed:" + to_string(leftSpeed) << endl;
+		cout << "TurnAngle RightSpeed:" + to_string(rightSpeed) << endl;
 	}
 	else
 	{
 		rightSpeed = .2 * deltaAngle / m_targetAngle + .03;
 		leftSpeed = -rightSpeed;
+		cout << "TurnAngle LeftSpeed:" + to_string(leftSpeed) << endl;
+		cout << "TurnAngle RightSpeed:" + to_string(rightSpeed) << endl;
 	}
 	
 	m_chassis->SetOutput(ControlModes::PERCENT_OUTPUT, leftSpeed, rightSpeed);
@@ -144,13 +149,11 @@ bool TurnAngle::IsDone()
 {
 	if (!m_isDone) 
 	{
-		auto heading = 0.0;
-		auto pigeon = PigeonFactory::GetFactory()->GetPigeon();
-		if ( pigeon != nullptr )
+		if ( m_pigeon != nullptr )
 		{
-			heading = pigeon->GetYaw();
+			m_heading = m_pigeon->GetYaw();
 		}
-		float absDeltaAngle = abs(m_targetAngle - heading);
+		float absDeltaAngle = abs(m_targetAngle - m_heading);
 		if (absDeltaAngle < ANGLE_THRESH) {
 			m_isDone = true;
 			m_chassis->SetOutput( ControlModes::PERCENT_OUTPUT, 0.0, 0.0 );
