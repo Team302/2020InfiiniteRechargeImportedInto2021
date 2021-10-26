@@ -116,15 +116,15 @@ void TurnAngle::Run() //best method ever. Does nothing, and should do nothing...
 	{
 		leftSpeed = .2 * deltaAngle / m_targetAngle + .03;
 		rightSpeed = -leftSpeed;
-		cout << "TurnAngle LeftSpeed:" + to_string(leftSpeed) << endl;
-		cout << "TurnAngle RightSpeed:" + to_string(rightSpeed) << endl;
+		//cout << "TurnAngle LeftSpeed:" + to_string(leftSpeed) << endl;
+		//cout << "TurnAngle RightSpeed:" + to_string(rightSpeed) << endl;
 	}
 	else
 	{
 		rightSpeed = .2 * deltaAngle / m_targetAngle + .03;
 		leftSpeed = -rightSpeed;
-		cout << "TurnAngle LeftSpeed:" + to_string(leftSpeed) << endl;
-		cout << "TurnAngle RightSpeed:" + to_string(rightSpeed) << endl;
+		//cout << "TurnAngle LeftSpeed:" + to_string(leftSpeed) << endl;
+		//cout << "TurnAngle RightSpeed:" + to_string(rightSpeed) << endl;
 	}
 	
 	m_chassis->SetOutput(ControlModes::PERCENT_OUTPUT, leftSpeed, rightSpeed);

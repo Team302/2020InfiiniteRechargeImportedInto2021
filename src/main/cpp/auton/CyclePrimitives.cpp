@@ -79,15 +79,15 @@ void CyclePrimitives::Run()
 	{
 		Logger::GetLogger()->LogError( string("CyclePrimitive::RunCurrentPrimitive"), string("Primitive Detected!"));
 		m_currentPrim->Run();
-		std::cout << "Turret angle in prim slot " + to_string(m_currentPrimSlot - 1) + " is " << to_string(m_primParams[m_currentPrimSlot - 1]->GetTurretAngle()) << endl;
+		//std::cout << "Turret angle in prim slot " + to_string(m_currentPrimSlot - 1) + " is " << to_string(m_primParams[m_currentPrimSlot - 1]->GetTurretAngle()) << endl;
 		if (m_primParams[m_currentPrimSlot - 1]->GetTurretAngle() > 1.0 )
 		{
 			m_turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, m_primParams[m_currentPrimSlot - 1]->GetTurretAngle());
-			std::cout << "Set turret state and running" << endl;
+			//std::cout << "Set turret state and running" << endl;
 		}
 		else
 		{
-			std::cout << "Did not run turret code" << endl;
+			//std::cout << "Did not run turret code" << endl;
 			//Runs if turret code is not run
 		}
 		

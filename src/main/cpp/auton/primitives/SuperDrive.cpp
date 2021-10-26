@@ -194,12 +194,12 @@ void SuperDrive::Run()
 	//m_rightSpeed = m_currentSpeed;
 	//m_leftSpeed = m_currentSpeed;
 
-	//m_leftSpeed += m_currentHeading * GYRO_CORRECTION_CONSTANT;
-	//m_rightSpeed -= m_currentHeading * GYRO_CORRECTION_CONSTANT;
+	m_leftSpeed += m_currentHeading * GYRO_CORRECTION_CONSTANT;
+	m_rightSpeed -= m_currentHeading * GYRO_CORRECTION_CONSTANT;
 
 	m_chassis->SetOutput( ControlModes::CONTROL_TYPE::PERCENT_OUTPUT, m_leftSpeed, m_rightSpeed );
-	cout << "DriveDistance LeftSpeed: " << to_string(m_leftSpeed) << endl;
-	cout << "DriveDistance RightSpeed: " << to_string(m_rightSpeed) << endl;
+	//cout << "DriveDistance LeftSpeed: " << to_string(m_leftSpeed) << endl;
+	//cout << "DriveDistance RightSpeed: " << to_string(m_rightSpeed) << endl;
 
 	//m_chassis->SetVelocityParams(PROPORTIONAL_COEFF, INTREGRAL_COEFF, DERIVATIVE_COEFF, FEET_FORWARD_COEFF, m_leftSpeed, m_rightSpeed);
 
