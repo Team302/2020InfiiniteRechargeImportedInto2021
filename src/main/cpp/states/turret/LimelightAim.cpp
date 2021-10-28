@@ -46,6 +46,7 @@ void LimelightAim::Run()
    double targetHorizontalOffset = m_limelight->GetTargetHorizontalOffset();
    double currentPosition = m_turret->GetCurrentPosition();
    //cout << "current " << to_string(currentPosition) << " target " << to_string(targetHorizontalOffset) << endl;
+   cout << "Limelight is ruunning" << endl;
    //m_turret->SetOutput(ControlModes::POSITION_DEGREES, currentPosition + targetHorizontalOffset + 2.0);
    m_turret->SetOutput(ControlModes::POSITION_DEGREES, currentPosition + targetHorizontalOffset);
 }

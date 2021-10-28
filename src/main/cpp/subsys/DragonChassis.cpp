@@ -95,7 +95,7 @@ void DragonChassis::SetOutput
 )
 {
 
-    auto left = 0.75*(leftValue * 0.99);
+    auto left = 0.75*(leftValue * 1.035);
     auto right = 0.75*rightValue;
     m_leftSide->SetOutput( controlType, left); //0.99 accounts for shooter side being slightly faster than right side
     m_rightSide->SetOutput( controlType, right);

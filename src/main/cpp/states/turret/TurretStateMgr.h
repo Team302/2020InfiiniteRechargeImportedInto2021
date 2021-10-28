@@ -36,6 +36,8 @@ class TurretStateMgr {
         /// @return void
         void RunCurrentState();
 
+        bool IsTurretTurnDone();
+
         /// @brief  set the current state, initialize it and run it
         /// @param [in]     SHOOTER_HOOD_STATE - state to set
         /// @param [in]     run - true means run, false just initialize it
