@@ -33,7 +33,8 @@ TurretTurn::TurretTurn(ControlData* controlData, double target): m_controlData(c
 void TurretTurn::Init()
 {
     m_turret->SetControlConstants(m_controlData);
-    m_currentAngle = m_turret->GetCurrentPosition();
+    m_startAngle = m_turret->GetCurrentPosition();
+
 }
 
 void TurretTurn::SetTarget(double targetAngle)
@@ -51,7 +52,7 @@ void TurretTurn::Run()
         std::cout << "Current Position: " + to_string(m_turret->GetCurrentPosition()) << endl;
         //std::cout << "Target angle: " + to_string(m_targetAngle) << endl;
         //if ( abs(m_targetAngle - m_turret->GetCurrentPosition()) < 5)
-        if (m_turret->GetCurrentPosition() >= m_targetAngle)
+        if (m_turret->GetCurrentPosition() >= (m_targetAngle + m_startAngle))
         {
             Done();
             m_isDone = true;

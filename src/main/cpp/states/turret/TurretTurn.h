@@ -40,5 +40,6 @@ class TurretTurn : public IState
         double m_targetAngle;
         double m_targetSpeed;
         double m_currentAngle;
+        double m_startAngle;
         bool   m_isDone;
 };

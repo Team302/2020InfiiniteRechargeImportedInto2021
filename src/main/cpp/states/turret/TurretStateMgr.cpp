@@ -149,8 +149,16 @@ void TurretStateMgr::RunCurrentState()
 
 bool TurretStateMgr::IsTurretTurnDone()
 {
-    TurretTurn* turretTurn = dynamic_cast<TurretTurn*>(m_currentState);
-    return turretTurn->AtTarget();
+    if (m_currentStateEnum == TURRET_TURN)
+    {
+        TurretTurn* turretTurn = dynamic_cast<TurretTurn*>(m_currentState);
+        if (m_currentState != nullptr)
+        {
+             return turretTurn->AtTarget();
+        }
+        //debug
+        cout << turretTurn->AtTarget() << endl;
+    }
 }
 
 void TurretStateMgr::SetCurrentState
