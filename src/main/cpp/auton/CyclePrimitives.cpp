@@ -81,15 +81,18 @@ void CyclePrimitives::Run()
 		m_currentPrim->Run();
 		//std::cout << "Turret angle in prim slot " + to_string(m_currentPrimSlot - 1) + " is " << to_string(m_primParams[m_currentPrimSlot - 1]->GetTurretAngle()) << endl;
 		if (m_primParams[m_currentPrimSlot - 1]->GetTurretAngle() > 1.0)
+		//m_primParams[m_currentPrimSlot - 1]->GetBallState()
 		{
-			if (m_turretStateManager->IsTurretTurnDone() == false){
-				std::cout << m_turretStateManager->IsTurretTurnDone();
-			m_turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, m_primParams[m_currentPrimSlot - 1]->GetTurretAngle());
+			if (m_turretStateManager->IsTurretTurnDone() == false)
+			{
+				//std::cout << m_turretStateManager->IsTurretTurnDone();
+				m_turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, m_primParams[m_currentPrimSlot - 1]->GetTurretAngle());
 			}
 			else
 			{
+				
 			}
-			std::cout << "Set turret state and running" << endl;
+			//std::cout << "Set turret state and running" << endl;
 
 		}
 		else

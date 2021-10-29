@@ -103,7 +103,7 @@ void TurnAngle::Run() //best method ever. Does nothing, and should do nothing...
 	if ( m_pigeon != nullptr )
 	{
 		m_heading = m_pigeon->GetYaw();
-		cout << "RobotTurnAngle Heading:" + to_string(m_heading) << endl;
+		//cout << "RobotTurnAngle Heading:" + to_string(m_heading) << endl;
 	}
 
 	float deltaAngle = m_targetAngle - m_heading;

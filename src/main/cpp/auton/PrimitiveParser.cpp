@@ -159,8 +159,8 @@ PrimitiveParamsVector PrimitiveParser::ParseXML
                         else if ( strcmp( attr.name(), "turretAngle") == 0 )
                         {
                             turretAngle = attr.as_float();
-                            cout << "Found turret angle attribute" << endl;
-                            cout << "Turret angle is " + to_string(turretAngle) << endl;
+                            //cout << "Found turret angle attribute" << endl;
+                            //cout << "Turret angle is " + to_string(turretAngle) << endl;
                         }
                         else if ( strcmp( attr.name(), "pathname") == 0)
                         {

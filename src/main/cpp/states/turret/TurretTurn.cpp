@@ -48,7 +48,7 @@ void TurretTurn::Run()
     //if (m_isDone == false)
     //{
              m_turret->SetOutput(ControlModes::PERCENT_OUTPUT, m_targetSpeed);
-        std::cout << "Target speed: " + to_string(m_targetSpeed) << endl;
+        //std::cout << "Target speed: " + to_string(m_targetSpeed) << endl;
         std::cout << "Current Position: " + to_string(m_turret->GetCurrentPosition()) << endl;
         //std::cout << "Target angle: " + to_string(m_targetAngle) << endl;
         //if ( abs(m_targetAngle - m_turret->GetCurrentPosition()) < 5)
@@ -56,7 +56,7 @@ void TurretTurn::Run()
         {
             Done();
             m_isDone = true;
-            cout << "TurretTurn is done, setting turret to 0%" << endl;
+            //cout << "TurretTurn is done, setting turret to 0%" << endl;
         }
     //}
 }

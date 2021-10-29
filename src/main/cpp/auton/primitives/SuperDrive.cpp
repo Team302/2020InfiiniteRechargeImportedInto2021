@@ -129,7 +129,7 @@ void SuperDrive::Run()
 	if ( pigeon != nullptr )
 	{
 		m_currentHeading = pigeon->GetYaw() - m_startHeading;
-		std::cout << "Pigeon Yaw: " + to_string(pigeon->GetYaw()) << endl;
+		//std::cout << "Pigeon Yaw: " + to_string(pigeon->GetYaw()) << endl;
 	}
 	//m_currentHeading = m_chassis->GetHeading() - m_chassis->GetTargetHeading(); //Calculate target heading
 

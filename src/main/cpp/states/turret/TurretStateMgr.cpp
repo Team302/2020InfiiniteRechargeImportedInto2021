@@ -143,6 +143,8 @@ void TurretStateMgr::RunCurrentState()
         if ( m_currentState != nullptr )
         {
             m_currentState->Run();
+            auto table = nt::NetworkTableInstance::GetDefault().GetTable("ATurretStateMgr");
+	        table.get()->PutString("Current State", to_string(m_currentStateEnum));
         }
     }
 }
@@ -157,7 +159,7 @@ bool TurretStateMgr::IsTurretTurnDone()
              return turretTurn->AtTarget();
         }
         //debug
-        cout << turretTurn->AtTarget() << endl;
+        //cout << turretTurn->AtTarget() << endl;
     }
 }
 

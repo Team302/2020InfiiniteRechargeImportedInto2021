@@ -111,9 +111,6 @@ void DragonChassis::SetOutput
     units::velocity::feet_per_second_t fpsRight = diffDriveSpeeds.right;
     double ipsLeft = fpsLeft.to<double>() * 12.0;
     double ipsRight = fpsRight.to<double>() * 12.0;
-    cout << "chassis speeds: " << chassisSpeeds.vx.to<double>() << " " <<chassisSpeeds.vy.to<double>() << " " <<chassisSpeeds.omega.to<double>() << " " <<  endl;
-    cout << "chassis left: " << ipsLeft << endl;
-    cout << "chassis right " << ipsRight << endl;
     SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, ipsLeft, ipsRight);
     /**
     units::velocity::feet_per_second_t vel {chassisSpeeds.vx};
