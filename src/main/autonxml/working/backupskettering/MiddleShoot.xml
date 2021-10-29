@@ -1,36 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE auton SYSTEM "auton.dtd">
 <auton>
-
-    <primitive id="DO_NOTHING"
-               time="4.0"
-               ballState="GET_READY_TO_SHOOT"
-               turretAngle="255.0"/>
     <primitive id="DO_NOTHING"
                time="0.25"
-               ballState="GET_READY_TO_SHOOT"
-               turretAngle="0.0"/>
+               ballState="GET_READY_TO_SHOOT"/>
     <primitive id="DO_NOTHING"
-               time="4.0"
+               time="6.0"
                ballState="SHOOT_AUTON"/>
-    <!--
     <primitive id="DO_NOTHING"
                time="6.0"
                ballState="INTAKE"/>
-               
     <primitive id="DO_NOTHING"
                time="6.0"
                ballState="SHOOT_AUTON"/>
-
     <primitive id="DO_NOTHING"
                time="0.25"
                ballState="OFF"/>
-              
     <primitive id="TURN_ANGLE_REL"
                 heading="-90.0"/>
-                -->
     <primitive id="DRIVE_DISTANCE"
-               distance="10.0"
-               drivespeed="-30.0"/>    
-               
+               distance="-30.0"/>
 </auton>

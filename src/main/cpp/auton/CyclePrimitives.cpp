@@ -32,6 +32,10 @@
 #include <auton/PrimitiveParser.h>
 #include <auton/PrimitiveParams.h>
 #include <states/BallManipulator.h>
+#include <states/turret/TurretStateMgr.h>
+#include <states/turret/TurretTurn.h>
+#include <subsys/MechanismFactory.h>
+#include <subsys/IMechanism.h>
 #include <utils/Logger.h>
 #include <auton/primitives/AutoShoot.h>
 
@@ -41,6 +45,7 @@ using namespace frc;
 using namespace std;
 
 CyclePrimitives::CyclePrimitives() : m_primParams(), 
+									 m_turretStateManager( TurretStateMgr::GetInstance() ),
 									 m_currentPrimSlot(0), 
 								     m_currentPrim(nullptr), 
 									 m_primFactory(
@@ -74,6 +79,28 @@ void CyclePrimitives::Run()
 	{
 		Logger::GetLogger()->LogError( string("CyclePrimitive::RunCurrentPrimitive"), string("Primitive Detected!"));
 		m_currentPrim->Run();
+		//std::cout << "Turret angle in prim slot " + to_string(m_currentPrimSlot - 1) + " is " << to_string(m_primParams[m_currentPrimSlot - 1]->GetTurretAngle()) << endl;
+		if (m_primParams[m_currentPrimSlot - 1]->GetTurretAngle() > 1.0)
+		//m_primParams[m_currentPrimSlot - 1]->GetBallState()
+		{
+			if (m_turretStateManager->IsTurretTurnDone() == false)
+			{
+				//std::cout << m_turretStateManager->IsTurretTurnDone();
+				m_turretStateManager->SetCurrentState(TurretStateMgr::TURRET_STATE::TURRET_TURN, true, m_primParams[m_currentPrimSlot - 1]->GetTurretAngle());
+			}
+			else
+			{
+				
+			}
+			//std::cout << "Set turret state and running" << endl;
+
+		}
+		else
+		{
+			//std::cout << "Did not run turret code" << endl;
+			//Runs if turret code is not run
+		}
+		
 		m_powerCells->Run();
 		if (m_currentPrim->IsDone() )
 		{

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE auton SYSTEM "auton.dtd">
+<auton>
+    <primitive distance="120.0"
+               drivespeed="-60.0"
+               id="DRIVE_DISTANCE"/>
+</auton>

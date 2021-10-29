@@ -20,59 +20,47 @@
 #include <memory>
 
 // FRC includes
+
 // Team 302 includes
 #include <auton/primitives/IPrimitive.h>
 
 // Third Party Includes
 
-
 class IChassis;
 namespace frc
 {
-	class Timer;
+    class Timer;
 }
 
 
-class SuperDrive : public IPrimitive 
+class TurnAngle : public IPrimitive 
 {
-	public:
-		void Init(PrimitiveParams* params) override;
-		void Run() override;
-		bool IsDone() override;
-		void SlowDown();
-		bool ReachedTargetSpeed();
+    public:
+        TurnAngle();
+        virtual ~TurnAngle() = default;
 
-		const float GYRO_CORRECTION_CONSTANT = 0.001;//0.1//6; //2.3
-		const float INCHES_PER_SECOND_SECOND = 120; //120
-		const float MIN_SPEED_SLOWDOWN       = 13;
+        void Init(PrimitiveParams* params) override;
+        void Run() override;
+        bool IsDone() override;
 
-protected: 
-		SuperDrive();
-		virtual ~SuperDrive() = default;
-
-	private:
-		const float PROPORTIONAL_COEFF  = 12.0; //16
-		const float INTREGRAL_COEFF     = 0;
-		const float DERIVATIVE_COEFF    = 0.0; //.16
-		const float FEET_FORWARD_COEFF  = 0.0;
+    private:
+        const float PROPORTIONAL_COEFF  = 3.0; //0.5
+        const float INTREGRAL_COEFF     = 0.0;
+        const float DERIVATIVE_COEFF    = 0.0;
+        const float FEET_FORWARD_COEFF  = 0.0;
 
         std::shared_ptr<IChassis> m_chassis;
    		std::unique_ptr<frc::Timer> m_timer;
 
-		float m_targetSpeed;
-		float m_currentSpeed;
-		float m_speedOffset;
+        float m_targetAngle;
+        float m_maxTime;
+        float m_leftPos;
+        float m_rightPos;
+        bool m_isDone;
 
-		float m_leftSpeed;
-		float m_rightSpeed;
-
-		float m_currentHeading;
-		float m_startHeading;
-
-		bool m_slowingDown;
-		bool m_reachedTargetSpeed;
-		float m_accelDecelTime;
-		float m_currentTime;
-		float m_minSpeedSlowdown;
+        const float ANGLE_THRESH = 2; // +/- threshold for being at angle
+        const float MAX_VELOCITY = 20; //inches per second
+        const float MIN_VELOCITY = 4;
+        const float ANGLE_DIFFERENCE_VELOCITY_MULTIPLIER = 0.7;
 };
 

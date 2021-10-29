@@ -20,6 +20,7 @@ class TurretStateMgr {
         LIMELIGHT_AIM,
         MANUAL_AIM,
         TURN_ANGLE,
+        TURRET_TURN,
         MAX_TURRET_STATES
       };
 
@@ -31,6 +32,8 @@ class TurretStateMgr {
         /// @brief  run the current state
         /// @return void
         void RunCurrentState();
+
+        bool IsTurretTurnDone();
 
         /// @brief  set the current state, initialize it and run it
         /// @param [in]     SHOOTER_HOOD_STATE - state to set
@@ -48,6 +51,8 @@ class TurretStateMgr {
         inline TURRET_STATE GetCurrentState() const { return m_currentStateEnum; };
         
         inline void SetApproxTargetAngle( double angle ) { m_approxTargetAngle = angle; }
+
+        inline IState* GetCurrentStatePointer() const { return m_currentState; };
 
     private:
 

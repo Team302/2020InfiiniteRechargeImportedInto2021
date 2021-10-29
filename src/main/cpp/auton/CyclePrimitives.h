@@ -36,6 +36,7 @@ class AutoShoot;
 class IPrimitive;
 class PrimitiveFactory;
 class PrimitiveParams;
+class TurretStateMgr;
 
 
 class CyclePrimitives : public IState
@@ -55,6 +56,7 @@ class CyclePrimitives : public IState
 
 	private:
 		std::vector<PrimitiveParams*> 	m_primParams;
+		TurretStateMgr* 				m_turretStateManager;
 		int 							m_currentPrimSlot;
 		IPrimitive*						m_currentPrim;
 		PrimitiveFactory* 				m_primFactory;

@@ -94,8 +94,11 @@ void DragonChassis::SetOutput
     double                                   rightValue     
 )
 {
-    m_leftSide->SetOutput( controlType, leftValue * 0.99 ); //0.99 accounts for shooter side being slightly faster than right side
-    m_rightSide->SetOutput( controlType, rightValue );
+
+    auto left = 0.75*(leftValue * 1.035);
+    auto right = 0.75*rightValue;
+    m_leftSide->SetOutput( controlType, left); //0.99 accounts for shooter side being slightly faster than right side
+    m_rightSide->SetOutput( controlType, right);
 }
 
 void DragonChassis::SetOutput
@@ -108,9 +111,6 @@ void DragonChassis::SetOutput
     units::velocity::feet_per_second_t fpsRight = diffDriveSpeeds.right;
     double ipsLeft = fpsLeft.to<double>() * 12.0;
     double ipsRight = fpsRight.to<double>() * 12.0;
-    cout << "chassis speeds: " << chassisSpeeds.vx.to<double>() << " " <<chassisSpeeds.vy.to<double>() << " " <<chassisSpeeds.omega.to<double>() << " " <<  endl;
-    cout << "chassis left: " << ipsLeft << endl;
-    cout << "chassis right " << ipsRight << endl;
     SetOutput(ControlModes::CONTROL_TYPE::VELOCITY_INCH, ipsLeft, ipsRight);
     /**
     units::velocity::feet_per_second_t vel {chassisSpeeds.vx};

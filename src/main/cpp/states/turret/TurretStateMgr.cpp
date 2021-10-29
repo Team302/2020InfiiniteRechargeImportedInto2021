@@ -17,6 +17,7 @@
 #include <gamepad/TeleopControl.h>
 
 #include <states/turret/TurretTurnAngle.h>
+#include <states/turret/TurretTurn.h>
 #include <states/turret/ManualAim.h>
 #include <states/turret/LimelightAim.h>
 #include <states/turret/HoldTurretPosition.h>
@@ -53,7 +54,8 @@ TurretStateMgr::TurretStateMgr() : m_stateVector(),
     stateMap["TURRETAUTOAIM"] = TURRET_STATE::LIMELIGHT_AIM;
     stateMap["TURRETMANUALAIM"] = TURRET_STATE::MANUAL_AIM;
     stateMap["TURRETTURNANGLE"] = TURRET_STATE::TURN_ANGLE;
-    m_stateVector.resize(4);
+    stateMap["TURRETTURN"] = TURRET_STATE::TURRET_TURN;
+    m_stateVector.resize(5);
 
     for ( auto td: targetData )
     {
@@ -99,6 +101,13 @@ TurretStateMgr::TurretStateMgr() : m_stateVector(),
                     }
                     break;
 
+                    case TURRET_STATE::TURRET_TURN:
+                    {
+                        auto thisState = new TurretTurn(controlData, target);
+                        m_stateVector[stateEnum] = thisState;
+                    }
+                    break;
+
                     default:
                     {
                         Logger::GetLogger()->LogError( string("TurretHoodStateMgr::TurretHoodStateMgr"), string("unknown state"));
@@ -137,6 +146,22 @@ void TurretStateMgr::RunCurrentState()
         }
     }
 }
+
+bool TurretStateMgr::IsTurretTurnDone()
+{
+    if (m_currentStateEnum == TURRET_TURN)
+    {
+        TurretTurn* turretTurn = dynamic_cast<TurretTurn*>(m_currentState);
+        if (m_currentState != nullptr)
+        {
+             return turretTurn->AtTarget();
+        }
+        //debug
+        //cout << turretTurn->AtTarget() << endl;
+    }
+    return true;
+}
+
 void TurretStateMgr::SetCurrentState
 (
     TURRET_STATE stateEnum,
@@ -147,6 +172,7 @@ void TurretStateMgr::SetCurrentState
     auto state = m_stateVector[stateEnum];
     if ( state != nullptr && state != m_currentState )
     {
+        /**
         if (stateEnum == TURN_ANGLE)
         {
             auto cdState = dynamic_cast<TurretTurnAngle*>(state);
@@ -154,6 +180,7 @@ void TurretStateMgr::SetCurrentState
             m_stateVector[stateEnum] = new TurretTurnAngle(cd,turretAngle, MechanismTargetData::SOLENOID::NONE);
             state = m_stateVector[stateEnum];
         }
+        **/
         m_currentState = state;
         m_currentStateEnum = stateEnum;
         m_currentState->Init();
@@ -165,8 +192,12 @@ void TurretStateMgr::SetCurrentState
                 llAim->UpdateTarget( m_approxTargetAngle );
             }
         }
+        else if (stateEnum == TURRET_TURN)
+        {
+            TurretTurn* turretTurn = dynamic_cast<TurretTurn*>(m_currentState);
+            turretTurn->SetTarget(turretAngle);
+        }
 
-        
         if ( run )
         {
             if ( MechanismFactory::GetMechanismFactory()->GetIMechanism( MechanismTypes::MECHANISM_TYPE::TURRET) != nullptr )

@@ -20,6 +20,7 @@
 #include <memory>
 
 // FRC includes
+#include <hw/DragonPigeon.h>
 
 // Team 302 includes
 #include <auton/primitives/IPrimitive.h>
@@ -62,5 +63,8 @@ class TurnAngle : public IPrimitive
         const float MAX_VELOCITY = 20; //inches per second
         const float MIN_VELOCITY = 4;
         const float ANGLE_DIFFERENCE_VELOCITY_MULTIPLIER = 0.7;
+
+        DragonPigeon*   m_pigeon;
+        double                        m_heading;
 };
 
